@@ -5,6 +5,7 @@
  */
 package njit_hack;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -26,6 +27,9 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     
     public NJIT_Hack(){
         //initialize here
+        setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        setFocusable(true);
+        addKeyListener(this);
         test1 = new Rectangle(100,100,50,50);
         
     }
