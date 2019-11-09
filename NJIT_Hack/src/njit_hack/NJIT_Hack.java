@@ -30,21 +30,22 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     int groundHeight;
     Rectangle player;
     int playerHeight;
-    //test2
+    int playerWidth;
     
     public NJIT_Hack(){
         //initialize here
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         setFocusable(true);
         addKeyListener(this);
-        //How Ground height is calculated being 1/3 of the screen
+        //How Ground height is calculated being 1/3 of the screen and the world is created.
         groundHeight =(SCREEN_HEIGHT /3);
         groundHeightPosition = ((groundHeight)*2);
-        
-        worldEnv = new Rectangle(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
         groundSpace = new Rectangle(0,(groundHeightPosition),SCREEN_WIDTH,(groundHeight)+2);
-        
-        //groundSpace = new Rectangle(0,100,50,50);
+        worldEnv = new Rectangle(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+        //How the player is created.
+        playerHeight = groundHeight + (groundHeight / 8);
+        playerWidth = (SCREEN_WIDTH / 8);
+        player = new Rectangle(200,250,playerWidth,playerHeight);
     }
     public void update(){
         //update stuff here
@@ -57,11 +58,14 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         g.fillRect(worldEnv.x,worldEnv.y,worldEnv.width,worldEnv.height);
         g.setColor(Color.GRAY);
         g.fillRect(groundSpace.x, groundSpace.y, groundSpace.width, groundSpace.height);
-        
+        g.setColor(Color.BLACK);
+        g.fillRect(player.x, player.y,player.width , player.height);
         
         
         repaint();
     }
+    
+    
     public final void print(Object b) {
         System.out.println(b);
         //this makes printing easier
