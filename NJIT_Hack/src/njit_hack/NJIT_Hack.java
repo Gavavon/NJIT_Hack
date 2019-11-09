@@ -22,7 +22,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     final int SCREEN_HEIGHT = 650;
     //delcare here
     Rectangle test1;
-    
+    //test
     
     public NJIT_Hack(){
         //initialize here
