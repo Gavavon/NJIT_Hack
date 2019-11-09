@@ -21,7 +21,7 @@ public class EnemeyStats {
     public Random gen = new Random();
     
     public void randomizeStats(){
-        health = gen.nextInt();
+        health = gen.nextInt(76) + 100;
         attack = gen.nextInt();
         speed = gen.nextInt();
         defense = gen.nextInt();

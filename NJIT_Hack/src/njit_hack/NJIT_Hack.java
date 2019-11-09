@@ -44,7 +44,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     public Random gen = new Random();
     
     public PlayerStats player = new PlayerStats();
-    public Sword1 sword = new Sword1();
+    public Sword1 sword1 = new Sword1();
     
     
     public NJIT_Hack(){
@@ -112,11 +112,12 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     public void playerAttack(){
         int multiplier = 1;
         
-        
-        
         if(criticalHit(player.getCriticalChance())){
             multiplier = 2;
         }
+        
+        
+        
     }
     public void playerEvade(){
         
@@ -126,6 +127,13 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     }
     public void playerUsePotion(){
         
+    }
+    public Object isEquiped(){
+        if(sword1.equipped){
+            return sword1;
+        }
+        
+        return null;
     }
     public boolean criticalHit(int cChance){
         int temp = gen.nextInt(100)+1;
