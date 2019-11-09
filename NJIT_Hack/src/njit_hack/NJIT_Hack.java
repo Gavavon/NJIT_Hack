@@ -8,9 +8,13 @@ package njit_hack;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -27,13 +31,17 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     Rectangle test1;
     Rectangle worldEnv;
     Rectangle groundSpace;
+    Rectangle player;
+    Rectangle playerTimeBar;
+    
     int groundHeightPosition;
     int groundHeight;
-    Rectangle player;
     int playerHeight;
     int playerWidth;
     int playerPositionX;
     int playerPositionY;
+    
+    Image timeBar;
     
     public NJIT_Hack(){
         //initialize here
@@ -51,12 +59,20 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         playerPositionY = (int) (SCREEN_HEIGHT / (double) (2.6));
         playerPositionX = (int) (SCREEN_WIDTH / (double) (4.8));
         
+        playerTimeBar = new Rectangle(playerPositionX+ 50, playerPositionY, 100, 100);
+        
         print(playerPositionX);
         print(playerPositionY);        
                
 
         player = new Rectangle(playerPositionX,playerPositionY,playerWidth,playerHeight);
 
+        try{
+            timeBar = ImageIO.read(new File("NJIT_Hack\\NJIT_Hack\\src\\njit_hack\\Time Scale.png"));
+
+        } catch (IOException e) {
+
+        }
         
       
     }
@@ -74,6 +90,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         g.setColor(Color.BLACK);
         g.fillRect(player.x, player.y,player.width , player.height);
         
+        g.drawImage(timeBar, playerTimeBar.x, playerTimeBar.y, playerTimeBar.width, playerTimeBar.height, null);
         
         repaint();
     }
