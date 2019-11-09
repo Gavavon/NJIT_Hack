@@ -65,7 +65,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         playerTimeBar = new Rectangle(playerRect.x, playerRect.y - (SCREEN_HEIGHT/(26/3)), playerRect.width, 50);
         try{
             
-            timeBar = ImageIO.read(new File("C:\\Users\\Gavav\\eclipse-workspace\\ListsAndMoreLists\\src\\adts\\Comp-228-Proj3\\NJIT_Hack\\NJIT_Hack\\src\\njit_hack\\Time Scale.png"));
+            timeBar = ImageIO.read(new File("src/njit_hack/Time Scale.png"));
 
         } catch (IOException e) {
 
