@@ -54,21 +54,17 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         groundSpace = new Rectangle(0,(groundHeightPosition),SCREEN_WIDTH,(groundHeight)+2);
         worldEnv = new Rectangle(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
         //How the player is created and posistioned on the screen.
-        playerHeight = groundHeight + (groundHeight / 8);
-        playerWidth = (SCREEN_WIDTH / 8);
-        playerPositionY = (int) (SCREEN_HEIGHT / (double) (2.6));
-        playerPositionX = (int) (SCREEN_WIDTH / (double) (4.8));
+        player = new Rectangle((int) (SCREEN_WIDTH / (double) (4.8)), (int)(SCREEN_HEIGHT / (double) (2.6)),(SCREEN_WIDTH / 8),groundHeight + (groundHeight / 8));
         
-        playerTimeBar = new Rectangle(playerPositionX+ 50, playerPositionY, 100, 100);
         
         print(playerPositionX);
         print(playerPositionY);        
                
 
-        player = new Rectangle(playerPositionX,playerPositionY,playerWidth,playerHeight);
-
+        playerTimeBar = new Rectangle(player.x, player.y - (SCREEN_HEIGHT/(26/3)), player.width, 50);
         try{
-            timeBar = ImageIO.read(new File("NJIT_Hack\\NJIT_Hack\\src\\njit_hack\\Time Scale.png"));
+            
+            timeBar = ImageIO.read(new File("C:\\Users\\Gavav\\eclipse-workspace\\ListsAndMoreLists\\src\\adts\\Comp-228-Proj3\\NJIT_Hack\\NJIT_Hack\\src\\njit_hack\\Time Scale.png"));
 
         } catch (IOException e) {
 
