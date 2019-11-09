@@ -6,6 +6,7 @@
 package njit_hack;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JFrame;
@@ -17,11 +18,16 @@ import javax.swing.JPanel;
  */
 public class NJIT_Hack extends JPanel implements KeyListener {
 
-    final int SCREEN_WIDTH = 600;
-    final int SCREEN_HEIGHT = 700;
+    final int SCREEN_WIDTH = 1200;
+    final int SCREEN_HEIGHT = 650;
     //delcare here
+    Rectangle test1;
+    
+    
     public NJIT_Hack(){
         //initialize here
+        test1 = new Rectangle(100,100,50,50);
+        
     }
     public void update(){
         //update stuff here
