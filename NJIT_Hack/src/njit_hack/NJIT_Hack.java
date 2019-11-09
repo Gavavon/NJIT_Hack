@@ -25,7 +25,7 @@ import njit_hack.EnemeyStats;
 
 /**
  *
- * @author Gavav, ilitchfield64,
+ * @author Gavav, ilitchfield64, jkpuzon
  */
 public class NJIT_Hack extends JPanel implements KeyListener {
 
