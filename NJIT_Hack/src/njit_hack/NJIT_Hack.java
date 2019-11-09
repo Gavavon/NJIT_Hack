@@ -5,6 +5,7 @@
  */
 package njit_hack;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -23,6 +24,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     final int SCREEN_HEIGHT = 650;
     //delcare here
     Rectangle test1;
+    Rectangle worldEnv;
+    Rectangle groundSpace;
     //test2
     
     public NJIT_Hack(){
@@ -30,7 +33,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         setFocusable(true);
         addKeyListener(this);
-        test1 = new Rectangle(100,100,50,50);
+        worldEnv = new Rectangle(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
         
     }
     public void update(){
@@ -40,7 +43,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         super.paint(g);
         update();
         //graphics
-        
+        g.setColor(Color.RED);
+        g.fillRect(worldEnv.x,worldEnv.y,worldEnv.width,worldEnv.height);
         
         
         
@@ -53,7 +57,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     public static void main(String[] args) {
         NJIT_Hack game = new NJIT_Hack();
         JFrame frame = new JFrame();
-        frame.setTitle("SpaceGame");
+        frame.setTitle("PizzaChopper");
         frame.add(game);
         frame.pack();
         frame.setResizable(true);
