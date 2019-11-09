@@ -48,8 +48,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         //How the player is created and posistioned on the screen.
         playerHeight = groundHeight + (groundHeight / 8);
         playerWidth = (SCREEN_WIDTH / 8);
-        playerPositionX = (int) (SCREEN_HEIGHT / 3);
-        playerPositionY = (int) (SCREEN_WIDTH / 8);
+        playerPositionY = (int) (SCREEN_HEIGHT / (double) (2.6));
+        playerPositionX = (int) (SCREEN_WIDTH / (double) (4.8));
         
         print(playerPositionX);
         print(playerPositionY);        
@@ -57,7 +57,6 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         player = new Rectangle(playerPositionX,playerPositionY,playerWidth,playerHeight);
 
-        player = new Rectangle(200,250,playerWidth,playerHeight);
         
       
     }
