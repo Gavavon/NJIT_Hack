@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Gavav
+ * @author Gavav, ilitchfield64,
  */
 public class NJIT_Hack extends JPanel implements KeyListener {
 
@@ -26,6 +26,10 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     Rectangle test1;
     Rectangle worldEnv;
     Rectangle groundSpace;
+    int groundHeightPosition;
+    int groundHeight;
+    Rectangle player;
+    int playerHeight;
     //test2
     
     public NJIT_Hack(){
@@ -33,8 +37,14 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         setFocusable(true);
         addKeyListener(this);
-        worldEnv = new Rectangle(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+        //How Ground height is calculated being 1/3 of the screen
+        groundHeight =(SCREEN_HEIGHT /3);
+        groundHeightPosition = ((groundHeight)*2);
         
+        worldEnv = new Rectangle(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+        groundSpace = new Rectangle(0,(groundHeightPosition),SCREEN_WIDTH,(groundHeight)+2);
+        
+        //groundSpace = new Rectangle(0,100,50,50);
     }
     public void update(){
         //update stuff here
@@ -45,6 +55,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         //graphics
         g.setColor(Color.RED);
         g.fillRect(worldEnv.x,worldEnv.y,worldEnv.width,worldEnv.height);
+        g.setColor(Color.GRAY);
+        g.fillRect(groundSpace.x, groundSpace.y, groundSpace.width, groundSpace.height);
         
         
         
