@@ -31,7 +31,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     Rectangle player;
     int playerHeight;
     int playerWidth;
-    
+    int playerPositionX;
+    int playerPositionY;
     public NJIT_Hack(){
         //initialize here
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -45,6 +46,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         //How the player is created.
         playerHeight = groundHeight + (groundHeight / 8);
         playerWidth = (SCREEN_WIDTH / 8);
+        
+               
         player = new Rectangle(200,250,playerWidth,playerHeight);
     }
     public void update(){
