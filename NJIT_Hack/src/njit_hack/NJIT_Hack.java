@@ -44,6 +44,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     public Random gen = new Random();
     
     public PlayerStats player = new PlayerStats();
+    public EnemeyStats enemey = new EnemeyStats();
     public Sword1 sword1 = new Sword1();
     
     
@@ -116,7 +117,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             multiplier = 2;
         }
         
-        
+        int enemeyHealth = enemey.getHealth();
         
     }
     public void playerEvade(){

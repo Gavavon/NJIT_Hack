@@ -20,12 +20,62 @@ public class EnemeyStats {
     
     public Random gen = new Random();
     
-    public void randomizeStats(){
-        health = gen.nextInt(76) + 100;
-        attack = gen.nextInt();
-        speed = gen.nextInt();
-        defense = gen.nextInt();
-        criticalChance = gen.nextInt();
+    public void randomizeStats(boolean hard){
+        if(!hard){
+            health = gen.nextInt(76) + 100;
+            attack = gen.nextInt(12) + 10;
+            speed = gen.nextInt();
+            defense = gen.nextInt();
+            criticalChance = gen.nextInt();
+        }
+        if(hard){
+            health = gen.nextInt(76) + 100;
+            attack = gen.nextInt();
+            speed = gen.nextInt();
+            defense = gen.nextInt();
+            criticalChance = gen.nextInt();
+        }
     }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
+    public int getCriticalChance() {
+        return criticalChance;
+    }
+
+    public void setCriticalChance(int criticalChance) {
+        this.criticalChance = criticalChance;
+    }
+    
     
 }
