@@ -14,10 +14,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import njit_hack.WeaponHolder;
+import njit_hack.PlayerStats;
+import njit_hack.EnemeyStats;
 
 /**
  *
@@ -27,41 +31,38 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
     final int SCREEN_WIDTH = 1200;
     final int SCREEN_HEIGHT = 650;
-    //delcare here
-    Rectangle test1;
-    Rectangle worldEnv;
-    Rectangle groundSpace;
-    Rectangle player;
-    Rectangle playerTimeBar;
     
-    int groundHeightPosition;
-    int groundHeight;
-    int playerHeight;
-    int playerWidth;
-    int playerPositionX;
-    int playerPositionY;
+    Rectangle backDrop;
+    Rectangle ground;
+    Rectangle playerRect;
+    Rectangle playerTimeBar;
     
     Image timeBar;
     
+    String text = "";
+    
+    public Random gen = new Random();
+    
+    public PlayerStats player = new PlayerStats();
+    public Sword1 sword = new Sword1();
+    
+    
     public NJIT_Hack(){
-        //initialize here
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         setFocusable(true);
         addKeyListener(this);
-        //How Ground height is calculated being 1/3 of the screen and the world is created.
-        groundHeight =(SCREEN_HEIGHT /3);
-        groundHeightPosition = ((groundHeight)*2);
-        groundSpace = new Rectangle(0,(groundHeightPosition),SCREEN_WIDTH,(groundHeight)+2);
-        worldEnv = new Rectangle(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
-        //How the player is created and posistioned on the screen.
-        player = new Rectangle((int) (SCREEN_WIDTH / (double) (4.8)), (int)(SCREEN_HEIGHT / (double) (2.6)),(SCREEN_WIDTH / 8),groundHeight + (groundHeight / 8));
         
+        player.setHealth(0);
+        player.setAttack(0);
+        player.setSpeed(0);
+        player.setDefense(0);
+        player.setCriticalChance(0);
         
-        print(playerPositionX);
-        print(playerPositionY);        
-               
-
-        playerTimeBar = new Rectangle(player.x, player.y - (SCREEN_HEIGHT/(26/3)), player.width, 50);
+        ground = new Rectangle(0,(SCREEN_HEIGHT /3)*2,SCREEN_WIDTH,(SCREEN_HEIGHT/3)+2);
+        backDrop = new Rectangle(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+        playerRect = new Rectangle((int) (SCREEN_WIDTH / (double) (4.8)), (int)(SCREEN_HEIGHT / (double) (2.6)),(SCREEN_WIDTH / 8),(SCREEN_HEIGHT/3) + ((SCREEN_HEIGHT/3) / 8));
+        
+        playerTimeBar = new Rectangle(playerRect.x, playerRect.y - (SCREEN_HEIGHT/(26/3)), playerRect.width, 50);
         try{
             
             timeBar = ImageIO.read(new File("C:\\Users\\Gavav\\eclipse-workspace\\ListsAndMoreLists\\src\\adts\\Comp-228-Proj3\\NJIT_Hack\\NJIT_Hack\\src\\njit_hack\\Time Scale.png"));
@@ -70,6 +71,23 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         }
         
+        /*
+        Rogue class:
+        attack = 6
+        speed = 40
+        defense = 10
+        critical = 8
+        Knight class:
+        attack = 4
+        speed = 5
+        defense = 60
+        critical = 2
+        Assassin class:
+        attack = 10
+        speed = 0
+        defense = 0
+        critical = 100
+        */
       
     }
     public void update(){
@@ -78,20 +96,44 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     public void paint(Graphics g) {
         super.paint(g);
         update();
-        //graphics
         g.setColor(Color.RED);
-        g.fillRect(worldEnv.x,worldEnv.y,worldEnv.width,worldEnv.height);
+        g.fillRect(backDrop.x,backDrop.y,backDrop.width,backDrop.height);
         g.setColor(Color.GRAY);
-        g.fillRect(groundSpace.x, groundSpace.y, groundSpace.width, groundSpace.height);
+        g.fillRect(ground.x, ground.y, ground.width, ground.height);
         g.setColor(Color.BLACK);
-        g.fillRect(player.x, player.y,player.width , player.height);
+        g.fillRect(playerRect.x, playerRect.y,playerRect.width , playerRect.height);
         
         g.drawImage(timeBar, playerTimeBar.x, playerTimeBar.y, playerTimeBar.width, playerTimeBar.height, null);
         
+        g.drawString("" + text, 0 , 0);
+        
         repaint();
     }
-    
-    
+    public void playerAttack(){
+        int multiplier = 1;
+        
+        
+        
+        if(criticalHit(player.getCriticalChance())){
+            multiplier = 2;
+        }
+    }
+    public void playerEvade(){
+        
+    }
+    public void playerDefend(){
+        
+    }
+    public void playerUsePotion(){
+        
+    }
+    public boolean criticalHit(int cChance){
+        int temp = gen.nextInt(100)+1;
+        if(cChance <= temp){
+            return true;
+        }
+        return false;
+    }
     public final void print(Object b) {
         System.out.println(b);
         //this makes printing easier
@@ -117,13 +159,36 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    
+        
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    
+        if (e.getKeyCode() == KeyEvent.VK_Q) {
+            playerUsePotion();
+        }
+        if (e.getKeyCode() == KeyEvent.VK_W) {
+            playerAttack();
+        }
+        if (e.getKeyCode() == KeyEvent.VK_E) {
+            playerEvade();
+        }
+        if (e.getKeyCode() == KeyEvent.VK_R) {
+            playerDefend();
+        }
+        if (e.getKeyCode() == KeyEvent.VK_T) {
+            
+        }
+        if (e.getKeyCode() == KeyEvent.VK_Y) {
+            
+        }
+        if (e.getKeyCode() == KeyEvent.VK_Z) {
+            //yes
+        }
+        if (e.getKeyCode() == KeyEvent.VK_X) {
+            //no
+        }
     }
     
 }
