@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import org.springframework.util.StopWatch;
 
 /**
  *
@@ -46,6 +47,12 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         playerHeight = groundHeight + (groundHeight / 8);
         playerWidth = (SCREEN_WIDTH / 8);
         player = new Rectangle(200,250,playerWidth,playerHeight);
+        
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        // Do something
+        stopWatch.stop();
+        System.out.println(stopWatch.getTotalTimeMillis());
     }
     public void update(){
         //update stuff here
