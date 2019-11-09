@@ -17,8 +17,8 @@ import javax.swing.JPanel;
  */
 public class NJIT_Hack extends JPanel implements KeyListener {
 
-    final int SCREEN_WIDTH = 600;
-    final int SCREEN_HEIGHT = 700;
+    final int SCREEN_WIDTH = 1200;
+    final int SCREEN_HEIGHT = 650;
     //delcare here
     public NJIT_Hack(){
         //initialize here
