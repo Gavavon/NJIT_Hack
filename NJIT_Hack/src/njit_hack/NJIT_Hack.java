@@ -42,7 +42,10 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     long kingCrimson = 0;
     long actualClock = 0;
     
+    Image buildingImgs[];
     
+    Image backDropImg;
+    Image groundImg;
 
     int buildingX = 0;
 
@@ -66,6 +69,9 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         setFocusable(true);
         addKeyListener(this);
         // initialization
+        
+        kingCrimson = System.currentTimeMillis();
+        actualClock = System.currentTimeMillis()- kingCrimson;
 
         player.setHealth(100);
         player.setAttack(0);
@@ -82,7 +88,9 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         enemyRect = new Rectangle(1400,playerRect.y,playerRect.width,playerRect.height);
         
         playerTimeBar = new Rectangle(playerRect.x, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), playerRect.width + 2, 50);
-
+        
+        buildingImgs = new Image[6];
+        
         buildings = new Rectangle[10];
 
         for (int i = 0; i < buildings.length; i++) {
@@ -96,10 +104,20 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         try {
 
             timeBar = ImageIO.read(new File("src/njit_hack/Time Scale.png"));
+            buildingImgs[0] = ImageIO.read(new File("src/njit_hack/building (1).png"));
+            buildingImgs[1] = ImageIO.read(new File("src/njit_hack/building (2).png"));
+            buildingImgs[2] = ImageIO.read(new File("src/njit_hack/building (3).png"));
+            buildingImgs[3] = ImageIO.read(new File("src/njit_hack/building (4).png"));
+            buildingImgs[4] = ImageIO.read(new File("src/njit_hack/building (5).png"));
+            buildingImgs[5] = ImageIO.read(new File("src/njit_hack/building (6).png"));
+            backDropImg = ImageIO.read(new File("src/njit_hack/Sky background.png"));
+            groundImg = ImageIO.read(new File("src/njit_hack/Ground.png"));
 
         } catch (IOException e) {
 
         }
+        
+        
 
         /*
         Rogue class:
@@ -138,10 +156,10 @@ public class NJIT_Hack extends JPanel implements KeyListener {
                 freeze = true;
             }
         }
-          
-        long kingCrimson = System.currentTimeMillis();
-        long actualClock = kingCrimson - System.currentTimeMillis();
+        
+        actualClock = System.currentTimeMillis()- kingCrimson;
     
+        print(actualClock);
     
     }
 
@@ -149,16 +167,18 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         super.paint(g);
         update();
         // graphics
-        g.setColor(Color.BLACK);
-        g.fillRect(backDrop.x, backDrop.y, backDrop.width, backDrop.height);
-        g.setColor(Color.RED);
+        g.drawImage(backDropImg, backDrop.x, backDrop.y, backDrop.width, backDrop.height, null);
         for (int i = 0; i < buildings.length; i++) {
-            g.fillRect(buildings[i].x, buildings[i].y, buildings[i].width, buildings[i].height);
-
+            int temp = 0;
+            if(i < buildingImgs.length){
+                temp = i;
+            }else{
+                temp = i - buildingImgs.length;
+            }
+            g.drawImage(buildingImgs[temp], buildings[i].x, buildings[i].y, buildings[i].width, buildings[i].height, null);
         }
 
-        g.setColor(Color.GRAY);
-        g.fillRect(ground.x, ground.y, ground.width, ground.height);
+        g.drawImage(groundImg, ground.x, ground.y, ground.width, ground.height, null);
         g.setColor(Color.GREEN);
         g.fillRect(playerRect.x, playerRect.y, playerRect.width, playerRect.height);
 
