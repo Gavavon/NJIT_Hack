@@ -49,13 +49,12 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
     String text = "";
     
-    Object tempWeapon;
-
     public Random gen = new Random();
 
     public PlayerStats player = new PlayerStats();
     public EnemeyStats enemey = new EnemeyStats();
     public Sword1 sword1 = new Sword1();
+    tempWeapon tempWeapon = new tempWeapon();
 
     public NJIT_Hack() {
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
