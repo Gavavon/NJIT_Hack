@@ -120,6 +120,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         defense = 0
         critical = 100
          */
+        
     }
 
     public void update() {
@@ -129,12 +130,18 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             freezeBuilding(buildings[i], buildings[i].x, freeze);
         
         }
-        for (int i = 0; i < enemyRect.x; i++) {
-            freezeEnemy(enemyRect, enemyRect.x, freeze);
-            
+        if(enemyRect.x != SCREEN_WIDTH/2 /* && after a certian amount of time*/){
+           enemyRect.x --;
+           
+        }else{
+            if(enemyRect.x == SCREEN_WIDTH/2){
+                freeze = true;
+            }
+        }
+          
         long kingCrimson = System.currentTimeMillis();
         long actualClock = kingCrimson - System.currentTimeMillis();
-    }
+    
     
     }
 
@@ -167,17 +174,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
     
     
-    public void enemyMove(Rectangle enemy, int x){
-        enemy.x -= 1;
-           if (enemy.x == (SCREEN_WIDTH / 2))
-               enemy.x--;
-    }
     
-    public void freezeEnemy(Rectangle enemy, int x, boolean freeze) {
-        if (!freeze) {
-            enemyMove(enemy, x);
-        }
-    }
     public void buildMove(Rectangle build, int x) {
         build.x -= 1;
         if (build.x == -200) {
