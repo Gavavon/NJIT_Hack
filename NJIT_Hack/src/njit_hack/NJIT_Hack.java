@@ -244,8 +244,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     }
 
     public Object isEquipped() {
-        if (sword1.equipped) {
-            return sword1;
+        if (sword1.getEquipped()) {
+            tempWeapon.;
         }
 
         return null;

@@ -6,6 +6,8 @@
 
 package njit_hack;
 
+
+import njit_hack.tempWeapon;
 import njit_hack.Sword1;
 import njit_hack.Sword2;
 import njit_hack.Sword3;
