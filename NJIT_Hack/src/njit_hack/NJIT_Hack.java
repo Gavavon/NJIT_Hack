@@ -111,6 +111,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         
         
         
+        
     }
     public void paint(Graphics g) {
         super.paint(g);
@@ -163,6 +164,35 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
         
     }
+    
+    public void enemeyAttack(){
+        int multiplier = 1;
+        
+        if(criticalHit(player.getCriticalChance())){
+            multiplier = 2;
+        }
+        
+        int enemeyHealth = enemey.getHealth();
+        
+    }
+    public void enemeyEvade(){
+        
+    }
+    public void enemeyDefend(){
+        
+    }
+    public void enemeyUsePotion(){
+        if(amountPotions > 0){
+            amountPotions -= 1;
+            player.setHealth(player.getHealth() + 50);
+            if(player.getHealth() > 100){
+                int temp = 100 - player.getHealth();
+                player.setHealth(player.getHealth() - temp);
+            }
+        }
+        
+    }
+    
     public void build(){
         int temp = gen.nextInt(4);
         buildings[temp].x --;
