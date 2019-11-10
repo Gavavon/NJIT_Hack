@@ -25,7 +25,7 @@ import njit_hack.EnemeyStats;
 
 /**
  *
- * @author Gavin O'Hanlon, ilitchfield64, jkpuzon
+ * @author Gavin O'Hanlon, Ian Litchfield, Jan K Puzon, Kareem Jackson
  */
 public class NJIT_Hack extends JPanel implements KeyListener {
     
