@@ -17,19 +17,40 @@ class tempWeapon {
     private int attackDamage = 0;
     private boolean isEquipped = false;
 
-    protected String get_Name() {
+    protected String getName() {
         return name;
     }
 
-    protected int get_attackDamage() {
+    protected int getAttackDamage() {
         return attackDamage;
     }
 
-    protected void set_equipped(boolean isEquipped) {
+    protected void setEquipped(boolean isEquipped) {
         this.isEquipped = isEquipped;
     }
 
-    protected boolean get_equipped() {
+    protected boolean getEquipped() {
+        return isEquipped;
+    }
+}
+class Sword1{
+    private String name = "Sword of dumb";
+    private int attackDamage = 10;
+    private boolean isEquipped = false;
+
+    protected String getName() {
+        return name;
+    }
+
+    protected int getAttackDamage() {
+        return attackDamage;
+    }
+
+    protected void setEquipped(boolean isEquipped) {
+        this.isEquipped = isEquipped;
+    }
+
+    protected boolean getEquipped() {
         return isEquipped;
     }
 }

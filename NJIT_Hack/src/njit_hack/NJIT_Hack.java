@@ -173,7 +173,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         int enemeyHealth = enemey.getHealth();
         
-        enemeyHealth  -= player.getAttack() + tempWeapon.get_Atk();
+        enemeyHealth  -= player.getAttack() + tempWeapon.getAttackDamage();
 
     }
 
