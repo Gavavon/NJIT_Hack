@@ -22,8 +22,8 @@ public class EnemeyStats {
     
     public void randomizeStats(boolean hard){
         if(!hard){
-            health = gen.nextInt(76) + 100;
-            attack = gen.nextInt(12) + 10;
+            health = gen.nextInt(50) + 75;// min: 75 max: 125
+            attack = gen.nextInt(12) + 12;
             speed = gen.nextInt();
             defense = gen.nextInt();
             criticalChance = gen.nextInt();
