@@ -38,9 +38,13 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     Rectangle playerTimeBar;
     Rectangle buildings[];
     
+    int buildingX = 0;
+    
     Image timeBar;
     
     int amountPotions = 3;
+    
+    boolean freeze = false;
     
     String text = "";
     
@@ -106,6 +110,11 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     }
     public void update(){
         //update stuff here
+        for(int i = 0; i < buildings.length; i ++){
+            freezeBuilding(buildings[i], buildings[i].x, buildings[i].y, freeze);
+        }
+        
+        
         build();
         
         
@@ -136,6 +145,20 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         g.drawString("" + text, 50 , 50);
         
         repaint();
+    }
+    public void buildMove(Rectangle build, int x, int y) {
+        build.x -= 1;
+        if (build.x == -200) {
+            build.y = y;
+            build.x = x;
+        }
+
+    }
+    public void freezeBuilding(Rectangle build, int x, int y, boolean freeze){
+        if (!freeze) {
+            buildMove(build, x, y);
+        }
+        
     }
     public void playerAttack(){
         int multiplier = 1;
@@ -173,7 +196,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
         
         int enemeyHealth = enemey.getHealth();
-        
+        //enemeyHealth 
     }
     public void enemeyEvade(){
         
