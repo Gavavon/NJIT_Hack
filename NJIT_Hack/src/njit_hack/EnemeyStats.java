@@ -22,18 +22,18 @@ public class EnemeyStats {
     
     public void randomizeStats(boolean hard){
         if(!hard){
-            health = gen.nextInt(50) + 75;// min: 75 max: 125
-            attack = gen.nextInt(12) + 12;
-            speed = gen.nextInt();
-            defense = gen.nextInt();
-            criticalChance = gen.nextInt();
+            this.health = gen.nextInt(50) + 75;// min: 75 max: 125
+            this.attack = gen.nextInt(12) + 12;
+            this.speed = gen.nextInt(10);
+            this.defense = gen.nextInt(10);
+            this.criticalChance = gen.nextInt(10);
         }
         if(hard){
-            health = gen.nextInt(76) + 100;
-            attack = gen.nextInt();
-            speed = gen.nextInt();
-            defense = gen.nextInt();
-            criticalChance = gen.nextInt();
+            this.health = gen.nextInt(76) + 100;
+            this.attack = gen.nextInt();
+            this.speed = gen.nextInt();
+            this.defense = gen.nextInt();
+            this.criticalChance = gen.nextInt();
         }
     }
 

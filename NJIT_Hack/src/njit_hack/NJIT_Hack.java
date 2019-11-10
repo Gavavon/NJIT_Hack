@@ -15,6 +15,7 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -42,6 +43,10 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     long kingCrimson = 0;
     long actualClock = 0;
     
+    boolean hardMode = false;
+    
+    boolean turnTake = false;
+    
     Image buildingImgs[];
     Image playerRun[];
    
@@ -58,6 +63,12 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     int amountPotions = 3;
 
     boolean freeze = false;
+    
+    int timer = 0;
+    int timer2 = 0;
+    int timer3 = 0;
+    int timer4 = 0;
+    int timer5 = 0;
 
     String text = "";
     
@@ -73,18 +84,42 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         setFocusable(true);
         addKeyListener(this);
         // initialization
+        boolean fail = true;
+        while(fail){
+        Scanner reader = new Scanner(System.in);
+        print("Please choose a class between Rogue or Knight");
+        String choice  = reader.nextLine();
+        
+            if(choice.equalsIgnoreCase("knight")){
+                player.setHealth(100);
+                player.setAttack(8);
+                player.setSpeed(40);
+                player.setDefense(5);
+                player.setCriticalChance(8);
+                fail = false;
+            }
+            if(choice.equalsIgnoreCase("rogue")){
+                player.setHealth(100);
+                player.setAttack(5);
+                player.setSpeed(2);
+                player.setDefense(65);
+                player.setCriticalChance(2);
+                fail = false;
+            }
+            if(fail){
+                print("please enter the correct paremeters!");
+            }
+        }
+        
+        enemey.randomizeStats(hardMode);
 
-        player.setHealth(100);
-        player.setAttack(0);
-        player.setSpeed(0);
-        player.setDefense(0);
-        player.setCriticalChance(0);
+        
         
         
 
         ground = new Rectangle(0, (SCREEN_HEIGHT / 3) * 2, SCREEN_WIDTH, (SCREEN_HEIGHT / 3) + 2);
         backDrop = new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        playerRect = new Rectangle((int) (SCREEN_WIDTH / (double) (4.8)), (int) (SCREEN_HEIGHT / (double) (2.6)), (SCREEN_WIDTH / 16), (SCREEN_HEIGHT / 3) + ((SCREEN_HEIGHT / 3) / 8));
+        playerRect = new Rectangle((int) (SCREEN_WIDTH / (double) (4.8)), (int) (SCREEN_HEIGHT / (double) (2.6)), (SCREEN_WIDTH / 18), (SCREEN_HEIGHT / 3) + ((SCREEN_HEIGHT / 3) / 8));
         
         enemyRect = new Rectangle(1400,playerRect.y,playerRect.width,playerRect.height);
         
@@ -195,20 +230,42 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         if(freeze){
             g.drawImage(ChefBoi, playerRect.x, playerRect.y, playerRect.width, playerRect.height, null);
         }
-        g.drawImage(timeBar, playerTimeBar.x, playerTimeBar.y, playerTimeBar.width, playerTimeBar.height, null);
-
+        
         g.drawString("" + text, 50, 50);
-        for (int i = 0; i < timerBar.length; i++) {
-            g.drawImage(timeBarImg, timerBar[i].x, timerBar[i].y, timerBar[i].width, timerBar[i].height,null);
-        }
+        
         g.setColor(Color.BLUE);
         g.fillRect(enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height);
         
         if(!freeze){
-            long temp = actualClock;
-            if(actualClock == (temp + 146)){
+            timer ++;
+            if(timer <= 25 && timer > 0){
                 g.drawImage(playerRun[0], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
+            }if(timer <= 50 && timer > 25){
+                g.drawImage(playerRun[1], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
+            }if(timer <= 75 && timer > 50){
+                g.drawImage(playerRun[2], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
+            }if(timer <= 100 && timer > 75){
+                g.drawImage(playerRun[3], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
+            }if(timer <= 125 && timer > 100){
+                g.drawImage(playerRun[4], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
+            }if(timer <= 150 && timer > 125){
+                g.drawImage(playerRun[5], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
+            }if(timer <= 175 && timer > 150){
+                g.drawImage(playerRun[6], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
+            }if(timer <= 200 && timer > 175){
+                g.drawImage(playerRun[7], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
             }
+            if(timer > 200){
+                timer = 0;
+            }
+            
+            if(turnTake){
+                for (int i = 0; i < timerBar.length; i++) {
+                    g.drawImage(timeBarImg, timerBar[i].x, timerBar[i].y, timerBar[i].width, timerBar[i].height,null);
+                }
+            }
+            
+            
         }
         
         
@@ -240,6 +297,10 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         int enemeyHealth = enemey.getHealth();
         
         enemeyHealth  -= (player.getAttack() + tempWeapon.getAttackDamage()) * multiplier;
+        
+        enemey.setHealth(enemeyHealth);
+        
+        turnTake = true;
 
     } 
 
@@ -247,8 +308,11 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         
         int temp = gen.nextInt(100) + 1;
         if(player.getSpeed() < temp){
-            //you dodge
+            
+        }else{
+            enemeyAttack();
         }
+        turnTake = true;
             
     }
 
@@ -258,6 +322,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         if(player.getDefense() < temp){
             //you you shield
         }
+        turnTake = true;
     }
 
     public void playerUsePotion() {
@@ -352,29 +417,31 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     
     public void keyReleased(KeyEvent e) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        if (e.getKeyCode() == KeyEvent.VK_Q) {
-            playerUsePotion();
-        }
-        if (e.getKeyCode() == KeyEvent.VK_W) {
-            //playerAttack();
-        }
-        if (e.getKeyCode() == KeyEvent.VK_E) {
-            playerEvade();
-        }
-        if (e.getKeyCode() == KeyEvent.VK_R) {
-            playerDefend();
-        }
-        if (e.getKeyCode() == KeyEvent.VK_T) {
+        if(freeze && !turnTake){
+            if (e.getKeyCode() == KeyEvent.VK_Q) {
+                playerUsePotion();
+            }
+            if (e.getKeyCode() == KeyEvent.VK_W) {
+                playerAttack();
+            }
+            if (e.getKeyCode() == KeyEvent.VK_E) {
+                playerEvade();
+            }
+            if (e.getKeyCode() == KeyEvent.VK_R) {
+                playerDefend();
+            }
+            if (e.getKeyCode() == KeyEvent.VK_T) {
 
-        }
-        if (e.getKeyCode() == KeyEvent.VK_Y) {
+            }
+            if (e.getKeyCode() == KeyEvent.VK_Y) {
 
-        }
-        if (e.getKeyCode() == KeyEvent.VK_Z) {
-            //yes
-        }
-        if (e.getKeyCode() == KeyEvent.VK_X) {
-            //no
+            }
+            if (e.getKeyCode() == KeyEvent.VK_Z) {
+                //yes
+            }
+            if (e.getKeyCode() == KeyEvent.VK_X) {
+                //no
+            }
         }
         if (e.getKeyCode() == KeyEvent.VK_P) {
             System.exit(0);
