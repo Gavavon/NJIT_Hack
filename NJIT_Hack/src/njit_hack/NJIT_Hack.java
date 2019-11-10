@@ -48,6 +48,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     boolean freeze = false;
 
     String text = "";
+    
+    Object tempWeapon;
 
     public Random gen = new Random();
 
@@ -170,8 +172,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
 
         int enemeyHealth = enemey.getHealth();
-        Object temp = isEquipped();
-        enemeyHealth  -= player.getAttack() + temp.get_Atk();
+        
+        enemeyHealth  -= player.getAttack() + tempWeapon.get_Atk();
 
     }
 
