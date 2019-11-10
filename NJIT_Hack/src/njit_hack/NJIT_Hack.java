@@ -71,7 +71,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         buildings = new Rectangle[4];
         
         for (int i =0; i < buildings.length; i++){
-            buildings[i] = new Rectangle(0 ,SCREEN_HEIGHT-(i*250), SCREEN_WIDTH/7, (SCREEN_HEIGHT));
+            buildings[i] = new Rectangle(i * 150,SCREEN_HEIGHT-(i*250), SCREEN_WIDTH/7, (SCREEN_HEIGHT));
         }
         
         try{
