@@ -33,11 +33,11 @@ class tempWeapon {
         this.attackDamage = attackDamage;
     }
 
-    public boolean isIsEquipped() {
+    public boolean getEquipped() {
         return isEquipped;
     }
 
-    public void setIsEquipped(boolean isEquipped) {
+    public void setEquipped(boolean isEquipped) {
         this.isEquipped = isEquipped;
     }
 
@@ -52,19 +52,11 @@ class Sword1{
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getAttackDamage() {
         return attackDamage;
     }
 
-    public void setAttackDamage(int attackDamage) {
-        this.attackDamage = attackDamage;
-    }
-
-    public boolean isIsEquipped() {
+    public boolean getEquipped() {
         return isEquipped;
     }
 
