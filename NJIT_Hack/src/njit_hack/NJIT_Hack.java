@@ -61,6 +61,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     Image timeBar;
     Image timeBarImg;
     Image ChefBoi;
+    Image ChefBoiFence;
+    Image ChefBoiFenceDef;
     Image pepDisc;
     Image pizzaGuy;
 
@@ -78,6 +80,13 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     int timer3 = 1000;
     int timer4 = 0;
     int timer5 = 0;
+    
+    boolean pattack = false;
+    boolean pevade = false;
+    boolean pdefend = false;
+    boolean eattack = false;
+    boolean eevade = false;
+    boolean edefend = false;
 
     String text = "";
 
@@ -164,6 +173,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             groundImg = ImageIO.read(new File("src/njit_hack/Ground.png"));
             timeBarImg = ImageIO.read(new File("src/njit_hack/timebar.png"));
             ChefBoi = ImageIO.read(new File("src/njit_hack/ChefBoi.png"));
+            ChefBoiFence = ImageIO.read(new File("src/njit_hack/ChefBoi fence.png"));
+            ChefBoiFenceDef = ImageIO.read(new File("src/njit_hack/ChefBoi fence defend.png"));
 
             playerRun[0] = ImageIO.read(new File("src/njit_hack/running chef (0).png"));
             playerRun[1] = ImageIO.read(new File("src/njit_hack/running chef (1).png"));
@@ -255,8 +266,9 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
 
         g.drawImage(groundImg, ground.x, ground.y, ground.width, ground.height, null);
-        
-        g.drawImage(pizzaGuy, enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height, null);
+        if(!eattack && !eevade && !edefend){
+            g.drawImage(pizzaGuy, enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height, null);
+        }
         
         if (freeze) {
             
@@ -269,7 +281,9 @@ public class NJIT_Hack extends JPanel implements KeyListener {
                 g.fillRect((enemyRect.x) + (i * 2), (enemyRect.y + enemyRect.height) + 7, 2, 5);
             }
             
-            g.drawImage(ChefBoi, playerRect.x, playerRect.y, playerRect.width, playerRect.height, null);
+            if(!pattack && !pevade && !pdefend){
+               g.drawImage(ChefBoi, playerRect.x, playerRect.y, playerRect.width, playerRect.height, null);
+            }
             g.drawImage(timeBar, playerTimeBar.x, playerTimeBar.y, playerTimeBar.width, playerTimeBar.height, null);
             
             g.drawImage(timeBar, enemyTimeBar.x, enemyTimeBar.y, enemyTimeBar.width, enemyTimeBar.height, null);
@@ -355,9 +369,62 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             
 
         }
-
+        g.setColor(Color.BLACK);
+        g.drawString("Number of Potions: " + amountPotions, SCREEN_WIDTH - 250, 50);
+        if(pattack){
+            g.drawImage(ChefBoiFence, playerRect.x + 150, playerRect.y, playerRect.width + 200, playerRect.height, this);
+            timer4 ++;
+            if(timer4 == 150){
+                timer4 = 0;
+                pattack = false;
+            }
+        }
+        if(pevade){
+            g.drawImage(ChefBoiFenceDef, playerRect.x - 150, playerRect.y, playerRect.width, playerRect.height, this);
+            timer4 ++;
+            if(timer4 == 150){
+                timer4 = 0;
+                pevade = false;
+            }
+        }
+        if(pdefend){
+            g.drawImage(ChefBoiFenceDef, playerRect.x, playerRect.y, playerRect.width, playerRect.height, this);
+            timer4 ++;
+            if(timer4 == 150){
+                timer4 = 0;
+                pdefend = false;
+            }
+        }
+        
+        
+        
+        
+        
         g.drawString("" + text, 50, 50);
-
+        if(eattack){
+            //g.drawImage(ChefBoiFence, playerRect.x + 150, playerRect.y, playerRect.width + 200, playerRect.height, this);
+            timer5 ++;
+            if(timer5 == 150){
+                timer5 = 0;
+                pattack = false;
+            }
+        }
+        if(eevade){
+            //g.drawImage(ChefBoiFence, playerRect.x, playerRect.y, playerRect.width, playerRect.height, this);
+            timer5 ++;
+            if(timer5 == 150){
+                timer5 = 0;
+                pevade = false;
+            }
+        }
+        if(edefend){
+            //g.drawImage(ChefBoiFence, playerRect.x, playerRect.y, playerRect.width, playerRect.height, this);
+            timer5 ++;
+            if(timer5 == 150){
+                timer5 = 0;
+                pdefend = false;
+            }
+        }
         if (!freeze) {
             timer++;
             if (timer <= 25 && timer > 0) {
@@ -422,6 +489,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         
         enemeyReduce = 1;
         
+        pattack = true;
+        
         turnTake = true;
 
     }
@@ -431,6 +500,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         int temp = gen.nextInt(100) + 1;
         if (player.getSpeed() < temp) {
             playerReduce = 0;
+            pevade = true;
         }
         turnTake = true;
 
@@ -441,6 +511,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         int temp = gen.nextInt(100) + 1;
         if (player.getDefense() < temp) {
             playerReduce = 0;
+            pdefend = true;
         }
         turnTake = true;
     }
@@ -472,6 +543,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         
         playerReduce = 1;
         
+        eattack = true;
+        
         eturnTake = true;
 
     }
@@ -480,6 +553,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         int temp = gen.nextInt(100) + 1;
         if (enemey.getSpeed() < temp) {
             enemeyReduce = 0;
+            eevade = true;
         }
         eturnTake = true;
     }
@@ -488,6 +562,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         int temp = gen.nextInt(100) + 1;
         if (enemey.getDefense() < temp) {
             enemeyReduce = 0;
+            edefend = true;
         }
         eturnTake = true;
     }
