@@ -65,7 +65,6 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
     public PlayerStats player = new PlayerStats();
     public EnemeyStats enemey = new EnemeyStats();
-    public StopWatch watch = new StopWatch();
     public Sword1 sword1 = new Sword1();
     tempWeapon tempWeapon = new tempWeapon();
 
@@ -178,20 +177,21 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         super.paint(g);
         update();
         // graphics
-        g.setColor(Color.BLACK);
-        g.fillRect(backDrop.x, backDrop.y, backDrop.width, backDrop.height);
-        g.setColor(Color.RED);
+        g.drawImage(backDropImg, backDrop.x, backDrop.y, backDrop.width, backDrop.height, null);
+        
         for (int i = 0; i < buildings.length; i++) {
-            g.fillRect(buildings[i].x, buildings[i].y, buildings[i].width, buildings[i].height);
-
+            int temp = 0;
+            if(i < buildingImgs.length){
+                temp = i;                
+            }else{
+                temp = i - buildingImgs.length;
+            }
+            
+            g.drawImage(buildingImgs[temp],buildings[i].x, buildings[i].y, buildings[i].width, buildings[i].height, null);
         }
-
-        g.setColor(Color.GRAY);
-        g.fillRect(ground.x, ground.y, ground.width, ground.height);
-        g.setColor(Color.GREEN);
-        g.fillRect(playerRect.x, playerRect.y, playerRect.width, playerRect.height);
-
+        
         g.drawImage(groundImg, ground.x, ground.y, ground.width, ground.height, null);
+        
         if(freeze){
             g.drawImage(ChefBoi, playerRect.x, playerRect.y, playerRect.width, playerRect.height, null);
         }
@@ -205,12 +205,10 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         g.fillRect(enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height);
         
         if(!freeze){
-            int temp = 0;
-            watch.start();
-            if(watch.elapsed == 142){
-                temp += 1;
+            long temp = actualClock;
+            if(actualClock == (temp + 146)){
+                g.drawImage(playerRun[0], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
             }
-            g.drawImage(playerRun[temp], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
         }
         
         
