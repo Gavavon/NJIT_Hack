@@ -40,7 +40,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     Rectangle buildings[];
     Rectangle timerBar[];
     Rectangle enemyRect;
-    Rectangle enemyTimeBar[];
+    Rectangle enemyTimeBar;
+    Rectangle enemyTimeBars[];
     long kingCrimson = 0;
     long actualClock = 0;
 
@@ -123,10 +124,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         enemyRect = new Rectangle(1400, playerRect.y, playerRect.width, playerRect.height);
 
-        playerTimeBar = new Rectangle(playerRect.x, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), playerRect.width + 2, 50);
         playerTimeBar = new Rectangle(playerRect.x - SCREEN_HEIGHT / 16, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 8) + 2, 50);
         
-        enemyTimeBar = new Rectangle(enemyRect.x, enemyRect.y - (SCREEN_HEIGHT / (28 / 4)), enemyRect.width + 4, 51);
         enemyTimeBar = new Rectangle(enemyRect.x - SCREEN_HEIGHT / 16, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 9) + 3, 52);
         
         buildingImgs = new Image[6];
@@ -141,9 +140,9 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             timerBar[i] = new Rectangle(playerTimeBar.x + 8 + (i * 14), playerTimeBar.y + 5, 10, 40);
         }    
         
-        enemyTimeBar = new Rectangle[10];
-        for (int i = 0; i <  enemyTimeBar.length; i++) {
-            enemyTimeBar[i] = new Rectangle(enemyTimeBar[i].x + 8 + (i * 14), enemyTimeBar[i].y + 5, 10, 40);
+        enemyTimeBars = new Rectangle[10];
+        for (int i = 0; i <  enemyTimeBars.length; i++) {
+            enemyTimeBars[i] = new Rectangle(enemyTimeBar.x + 8 + (i * 14), enemyTimeBar.y + 5, 10, 40);
             
         }
         try {
