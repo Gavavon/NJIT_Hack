@@ -189,7 +189,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         int enemeyHealth = enemey.getHealth();
         
-        enemeyHealth  -= player.getAttack() + tempWeapon.getAttackDamage();
+        enemeyHealth  -= (player.getAttack() + tempWeapon.getAttackDamage()) * multiplier;
 
     }
 
@@ -245,7 +245,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
     public Object isEquipped() {
         if (sword1.getEquipped()) {
-            tempWeapon.;
+            tempWeapon.setAttackDamage(sword1.getAttackDamage());
         }
 
         return null;
