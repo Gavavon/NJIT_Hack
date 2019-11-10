@@ -164,11 +164,20 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         
     }
     public void build(){
+       
+        
         int temp = gen.nextInt(4);
-        buildings[temp].x --;
-        if(buildings[temp].x == -200){
-            buildings[temp].x = 1400;
+        
+        
+        while (buildings[temp].x != -300){
+            buildings[temp].x--;
         }
+        
+       /* if(buildings[0].x == -400){
+            buildings[0].x = 1400;
+            
+            
+        } */
     }
     public Object isEquiped(){
         if(sword1.equipped){
