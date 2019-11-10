@@ -16,13 +16,13 @@ public class PlayerStats {
     private int defense;
     private int criticalChance;
     
-    public int getHealth() {
+    public int getHealth(100) {
             return health;
     }
     public void setHealth(int health) {
             this.health = health;
     }
-    public int getAttack() {
+    public int getAttack(10) {
             return attack;
     }
     public void setAttack(int attack) {
