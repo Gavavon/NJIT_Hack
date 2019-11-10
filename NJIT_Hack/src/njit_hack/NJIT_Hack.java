@@ -25,7 +25,7 @@ import njit_hack.EnemeyStats;
 
 /**
  *
- * @author Gavav, ilitchfield64,
+ * @author Gavav, ilitchfield64, jkpuzon
  */
 public class NJIT_Hack extends JPanel implements KeyListener {
 
@@ -40,11 +40,14 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     
     Image timeBar;
     
+    int amountPotions = 3;
+    
     String text = "";
     
     public Random gen = new Random();
     
     public PlayerStats player = new PlayerStats();
+    public EnemeyStats enemey = new EnemeyStats();
     public Sword1 sword1 = new Sword1();
     
     
@@ -53,7 +56,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         setFocusable(true);
         addKeyListener(this);
         
-        player.setHealth(0);
+        player.setHealth(100);
         player.setAttack(0);
         player.setSpeed(0);
         player.setDefense(0);
@@ -82,11 +85,13 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         
         /*
         Rogue class:
+        health = 100;
         attack = 6
         speed = 40
-        defense = 10
+        defense = 5
         critical = 8
         Knight class:
+        health = 125;
         attack = 4
         speed = 5
         defense = 60
@@ -121,7 +126,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         
         g.drawImage(timeBar, playerTimeBar.x, playerTimeBar.y, playerTimeBar.width, playerTimeBar.height, null);
         
-        g.drawString("" + text, 0 , 0);
+        
+        g.drawString("" + text, 50 , 50);
         
         repaint();
     }
@@ -132,7 +138,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             multiplier = 2;
         }
         
-        
+        int enemeyHealth = enemey.getHealth();
         
     }
     public void playerEvade(){
@@ -142,6 +148,14 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         
     }
     public void playerUsePotion(){
+        if(amountPotions > 0){
+            amountPotions -= 1;
+            player.setHealth(player.getHealth() + 50);
+            if(player.getHealth() > 100){
+                int temp = 100 - player.getHealth();
+                player.setHealth(player.getHealth() - temp);
+            }
+        }
         
     }
     public Object isEquiped(){
