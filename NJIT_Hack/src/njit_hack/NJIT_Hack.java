@@ -29,7 +29,7 @@ import njit_hack.EnemeyStats;
  * @author Gavin O'Hanlon, ilitchfield64, jkpuzon
  */
 public class NJIT_Hack extends JPanel implements KeyListener {
-    
+
     final int SCREEN_WIDTH = 1200;
     final int SCREEN_HEIGHT = 650;
     //declarations
@@ -42,16 +42,16 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     Rectangle enemyRect;
     long kingCrimson = 0;
     long actualClock = 0;
-    
+
     boolean hardMode = false;
-    
+
     boolean turnTake = false;
-    
+
     Image buildingImgs[];
     Image playerRun[];
-   
+
     Image backDropImg;
-    
+
     Image groundImg;
 
     int buildingX = 0;
@@ -61,17 +61,20 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     Image ChefBoi;
 
     int amountPotions = 3;
+    
+    int enemeyReduce = 1;
+    int playerReduce = 1;
 
     boolean freeze = false;
-    
+
     int timer = 0;
-    int timer2 = 0;
+    int timer2 = 1000;
     int timer3 = 0;
     int timer4 = 0;
     int timer5 = 0;
 
     String text = "";
-    
+
     public Random gen = new Random();
 
     public PlayerStats player = new PlayerStats();
@@ -85,12 +88,12 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         addKeyListener(this);
         // initialization
         boolean fail = true;
-        while(fail){
-        Scanner reader = new Scanner(System.in);
-        print("Please choose a class between Rogue or Knight");
-        String choice  = reader.nextLine();
-        
-            if(choice.equalsIgnoreCase("knight")){
+        while (fail) {
+            Scanner reader = new Scanner(System.in);
+            print("Please choose a class between Rogue or Knight");
+            String choice = reader.nextLine();
+
+            if (choice.equalsIgnoreCase("knight")) {
                 player.setHealth(100);
                 player.setAttack(8);
                 player.setSpeed(40);
@@ -98,7 +101,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
                 player.setCriticalChance(8);
                 fail = false;
             }
-            if(choice.equalsIgnoreCase("rogue")){
+            if (choice.equalsIgnoreCase("rogue")) {
                 player.setHealth(100);
                 player.setAttack(5);
                 player.setSpeed(2);
@@ -106,30 +109,26 @@ public class NJIT_Hack extends JPanel implements KeyListener {
                 player.setCriticalChance(2);
                 fail = false;
             }
-            if(fail){
+            if (fail) {
                 print("please enter the correct paremeters!");
             }
         }
-        
-        enemey.randomizeStats(hardMode);
 
-        
-        
-        
+        enemey.randomizeStats(hardMode);
 
         ground = new Rectangle(0, (SCREEN_HEIGHT / 3) * 2, SCREEN_WIDTH, (SCREEN_HEIGHT / 3) + 2);
         backDrop = new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         playerRect = new Rectangle((int) (SCREEN_WIDTH / (double) (4.8)), (int) (SCREEN_HEIGHT / (double) (2.6)), (SCREEN_WIDTH / 18), (SCREEN_HEIGHT / 3) + ((SCREEN_HEIGHT / 3) / 8));
-        
-        enemyRect = new Rectangle(1400,playerRect.y,playerRect.width,playerRect.height);
-        
+
+        enemyRect = new Rectangle(1400, playerRect.y, playerRect.width, playerRect.height);
+
         playerTimeBar = new Rectangle(playerRect.x, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), playerRect.width + 2, 50);
-        playerTimeBar = new Rectangle(playerRect.x - SCREEN_HEIGHT/16, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 8) + 2, 50);
-        
+        playerTimeBar = new Rectangle(playerRect.x - SCREEN_HEIGHT / 16, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 8) + 2, 50);
+
         buildingImgs = new Image[6];
         buildings = new Rectangle[10];
         playerRun = new Image[8];
-        
+
         for (int i = 0; i < buildings.length; i++) {
             buildings[i] = new Rectangle(SCREEN_WIDTH + 200 + gen.nextInt(1000), ground.y - ((SCREEN_HEIGHT / 8) + (i * 25)), (SCREEN_WIDTH / 12), (SCREEN_HEIGHT / 8) + (i * 25));
         }
@@ -151,7 +150,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             groundImg = ImageIO.read(new File("src/njit_hack/Ground.png"));
             timeBarImg = ImageIO.read(new File("src/njit_hack/timebar.png"));
             ChefBoi = ImageIO.read(new File("src/njit_hack/ChefBoi.png"));
-            
+
             playerRun[0] = ImageIO.read(new File("src/njit_hack/running chef (0).png"));
             playerRun[1] = ImageIO.read(new File("src/njit_hack/running chef (1).png"));
             playerRun[2] = ImageIO.read(new File("src/njit_hack/running chef (2).png"));
@@ -183,29 +182,27 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         defense = 0
         critical = 100
          */
-        
     }
 
     public void update() {
         //update stuff here
-        
+
         for (int i = 0; i < buildings.length; i++) {
             freezeBuilding(buildings[i], buildings[i].x, freeze);
-        
+
         }
-        if(enemyRect.x != SCREEN_WIDTH/2 /* && after a certian amount of time*/){
-           enemyRect.x --;
-           
-        }else{
-            if(enemyRect.x == SCREEN_WIDTH/2){
+        if (enemyRect.x != SCREEN_WIDTH / 2 /* && after a certian amount of time*/) {
+            enemyRect.x--;
+
+        } else {
+            if (enemyRect.x == SCREEN_WIDTH / 2) {
                 freeze = true;
             }
         }
-          
+
         long kingCrimson = System.currentTimeMillis();
         long actualClock = kingCrimson - System.currentTimeMillis();
-    
-    
+
     }
 
     public void paint(Graphics g) {
@@ -213,65 +210,110 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         update();
         // graphics
         g.drawImage(backDropImg, backDrop.x, backDrop.y, backDrop.width, backDrop.height, null);
-        
+
         for (int i = 0; i < buildings.length; i++) {
             int temp = 0;
-            if(i < buildingImgs.length){
-                temp = i;                
-            }else{
+            if (i < buildingImgs.length) {
+                temp = i;
+            } else {
                 temp = i - buildingImgs.length;
             }
-            
-            g.drawImage(buildingImgs[temp],buildings[i].x, buildings[i].y, buildings[i].width, buildings[i].height, null);
+
+            g.drawImage(buildingImgs[temp], buildings[i].x, buildings[i].y, buildings[i].width, buildings[i].height, null);
         }
-        
+
         g.drawImage(groundImg, ground.x, ground.y, ground.width, ground.height, null);
         
-        if(freeze){
+        if (freeze) {
+            
+            for (int i = 0; i <= player.getHealth(); i++) {
+                g.setColor(Color.RED);
+                g.fillRect((playerRect.x - 60) + (i * 2), (playerRect.y + playerRect.height) + 7, 2, 5);
+            }
+            
             g.drawImage(ChefBoi, playerRect.x, playerRect.y, playerRect.width, playerRect.height, null);
+            g.drawImage(timeBar, playerTimeBar.x, playerTimeBar.y, playerTimeBar.width, playerTimeBar.height, null);
+
+            if (turnTake == true) {
+                timer2 --;
+                if(timer2 == 0){
+                    turnTake = false;
+                    timer2 = 1000;
+                }
+                if (timer2 >= 100) {
+                    g.drawImage(timeBarImg, timerBar[0].x, timerBar[0].y, timerBar[0].width, timerBar[0].height, null);
+                    if (timer2 >= 200) {
+                        g.drawImage(timeBarImg, timerBar[1].x, timerBar[1].y, timerBar[1].width, timerBar[1].height, null);
+                        if (timer2 >= 300) {
+                            g.drawImage(timeBarImg, timerBar[2].x, timerBar[2].y, timerBar[2].width, timerBar[2].height, null);
+                            if (timer2 >= 400) {
+                                g.drawImage(timeBarImg, timerBar[3].x, timerBar[3].y, timerBar[3].width, timerBar[3].height, null);
+                                if (timer2 >= 500) {
+                                    g.drawImage(timeBarImg, timerBar[4].x, timerBar[4].y, timerBar[4].width, timerBar[4].height, null);
+                                    if (timer2 >= 600) {
+                                        g.drawImage(timeBarImg, timerBar[5].x, timerBar[5].y, timerBar[5].width, timerBar[5].height, null);
+                                        if (timer2 >= 700) {
+                                            g.drawImage(timeBarImg, timerBar[6].x, timerBar[6].y, timerBar[6].width, timerBar[6].height, null);
+                                            if (timer2 >= 800) {
+                                                g.drawImage(timeBarImg, timerBar[7].x, timerBar[7].y, timerBar[7].width, timerBar[7].height, null);
+                                                if (timer2 >= 900) {
+                                                    g.drawImage(timeBarImg, timerBar[8].x, timerBar[8].y, timerBar[8].width, timerBar[8].height, null);
+                                                    if (timer2 >= 1000) {
+                                                        g.drawImage(timeBarImg, timerBar[9].x, timerBar[9].y, timerBar[9].width, timerBar[9].height, null);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
+
         }
-        
+
         g.drawString("" + text, 50, 50);
-        
+
         g.setColor(Color.BLUE);
         g.fillRect(enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height);
-        
-        if(!freeze){
-            timer ++;
-            if(timer <= 25 && timer > 0){
-                g.drawImage(playerRun[0], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
-            }if(timer <= 50 && timer > 25){
-                g.drawImage(playerRun[1], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
-            }if(timer <= 75 && timer > 50){
-                g.drawImage(playerRun[2], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
-            }if(timer <= 100 && timer > 75){
-                g.drawImage(playerRun[3], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
-            }if(timer <= 125 && timer > 100){
-                g.drawImage(playerRun[4], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
-            }if(timer <= 150 && timer > 125){
-                g.drawImage(playerRun[5], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
-            }if(timer <= 175 && timer > 150){
-                g.drawImage(playerRun[6], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
-            }if(timer <= 200 && timer > 175){
-                g.drawImage(playerRun[7], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
+
+        if (!freeze) {
+            timer++;
+            if (timer <= 25 && timer > 0) {
+                g.drawImage(playerRun[0], playerRect.x, playerRect.y, playerRect.width + 50, playerRect.height, null);
             }
-            if(timer > 200){
+            if (timer <= 50 && timer > 25) {
+                g.drawImage(playerRun[1], playerRect.x, playerRect.y, playerRect.width + 50, playerRect.height, null);
+            }
+            if (timer <= 75 && timer > 50) {
+                g.drawImage(playerRun[2], playerRect.x, playerRect.y, playerRect.width + 50, playerRect.height, null);
+            }
+            if (timer <= 100 && timer > 75) {
+                g.drawImage(playerRun[3], playerRect.x, playerRect.y, playerRect.width + 50, playerRect.height, null);
+            }
+            if (timer <= 125 && timer > 100) {
+                g.drawImage(playerRun[4], playerRect.x, playerRect.y, playerRect.width + 50, playerRect.height, null);
+            }
+            if (timer <= 150 && timer > 125) {
+                g.drawImage(playerRun[5], playerRect.x, playerRect.y, playerRect.width + 50, playerRect.height, null);
+            }
+            if (timer <= 175 && timer > 150) {
+                g.drawImage(playerRun[6], playerRect.x, playerRect.y, playerRect.width + 50, playerRect.height, null);
+            }
+            if (timer <= 200 && timer > 175) {
+                g.drawImage(playerRun[7], playerRect.x, playerRect.y, playerRect.width + 50, playerRect.height, null);
+            }
+            if (timer > 200) {
                 timer = 0;
             }
-            
-            if(turnTake){
-                for (int i = 0; i < timerBar.length; i++) {
-                    g.drawImage(timeBarImg, timerBar[i].x, timerBar[i].y, timerBar[i].width, timerBar[i].height,null);
-                }
-            }
-            
-            
         }
-        
-        
-        
+
         repaint();
     }
+
     public void buildMove(Rectangle build, int x) {
         build.x -= 1;
         if (build.x == -200) {
@@ -287,7 +329,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
     }
 
-     public void playerAttack() {
+    public void playerAttack() {
         int multiplier = 1;
 
         if (criticalHit(player.getCriticalChance())) {
@@ -295,31 +337,33 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
 
         int enemeyHealth = enemey.getHealth();
-        
-        enemeyHealth  -= (player.getAttack() + tempWeapon.getAttackDamage()) * multiplier;
-        
+
+        enemeyHealth -= ((player.getAttack() + tempWeapon.getAttackDamage()) * multiplier) * enemeyReduce;
+
         enemey.setHealth(enemeyHealth);
+        
+        enemeyReduce = 1;
         
         turnTake = true;
 
-    } 
+    }
 
-     public void playerEvade() {
-        
+    public void playerEvade() {
+
         int temp = gen.nextInt(100) + 1;
-        if(player.getSpeed() < temp){
+        if (player.getSpeed() < temp) {
             
-        }else{
+        } else {
             enemeyAttack();
         }
         turnTake = true;
-            
+
     }
 
     public void playerDefend() {
 
         int temp = gen.nextInt(100) + 1;
-        if(player.getDefense() < temp){
+        if (player.getDefense() < temp) {
             //you you shield
         }
         turnTake = true;
@@ -344,7 +388,6 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             multiplier = 2;
         }
 
-        
     }
 
     public void enemeyEvade() {
@@ -413,11 +456,10 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     }
 
     @Override
-    
-    
+
     public void keyReleased(KeyEvent e) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        if(freeze && !turnTake){
+        if (freeze && !turnTake) {
             if (e.getKeyCode() == KeyEvent.VK_Q) {
                 playerUsePotion();
             }
@@ -431,7 +473,6 @@ public class NJIT_Hack extends JPanel implements KeyListener {
                 playerDefend();
             }
             if (e.getKeyCode() == KeyEvent.VK_T) {
-
             }
             if (e.getKeyCode() == KeyEvent.VK_Y) {
 
