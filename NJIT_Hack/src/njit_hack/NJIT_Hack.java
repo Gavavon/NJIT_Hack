@@ -38,6 +38,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     Rectangle playerTimeBar;
     Rectangle buildings[];
     Rectangle timerBar[];
+    Rectangle enemyRect;
 
     int buildingX = 0;
 
@@ -71,7 +72,9 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         ground = new Rectangle(0, (SCREEN_HEIGHT / 3) * 2, SCREEN_WIDTH, (SCREEN_HEIGHT / 3) + 2);
         backDrop = new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         playerRect = new Rectangle((int) (SCREEN_WIDTH / (double) (4.8)), (int) (SCREEN_HEIGHT / (double) (2.6)), (SCREEN_WIDTH / 8), (SCREEN_HEIGHT / 3) + ((SCREEN_HEIGHT / 3) / 8));
-
+        
+        enemyRect = new Rectangle(1400,playerRect.y,playerRect.width,playerRect.height);
+        
         playerTimeBar = new Rectangle(playerRect.x, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), playerRect.width + 2, 50);
 
         buildings = new Rectangle[10];
@@ -115,10 +118,13 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
     public void update() {
         //update stuff here
+        
         for (int i = 0; i < buildings.length; i++) {
             freezeBuilding(buildings[i], buildings[i].x, freeze);
+        
         }
-
+    
+    
     }
 
     public void paint(Graphics g) {
@@ -144,8 +150,19 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         for (int i = 0; i < timerBar.length; i++) {
             g.fillRect(timerBar[i].x, timerBar[i].y, timerBar[i].width, timerBar[i].height);
         }
+        g.setColor(Color.BLUE);
+        g.fillRect(enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height);
             repaint();
         }
+    
+    
+    public void enemyMove(Rectangle enemy, int x){
+        enemy.x -= 1;
+        if (enemy.x == (SCREEN_WIDTH / 2)){
+            freeze = true;
+        }
+            
+    }
     
 
     public void buildMove(Rectangle build, int x) {
