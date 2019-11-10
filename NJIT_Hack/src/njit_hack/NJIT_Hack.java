@@ -71,7 +71,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         buildings = new Rectangle[4];
         
         for (int i =0; i < buildings.length; i++){
-            buildings[i] = new Rectangle(i * 150,SCREEN_HEIGHT-(i*250), SCREEN_WIDTH/7, (SCREEN_HEIGHT));
+            buildings[i] = new Rectangle(1400, ground.y - ((SCREEN_HEIGHT/8) + (i * 100)), (SCREEN_WIDTH/12), (SCREEN_HEIGHT/8) + (i * 100));
         }
         
         try{
@@ -106,6 +106,11 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     }
     public void update(){
         //update stuff here
+        build();
+        
+        
+        
+        
     }
     public void paint(Graphics g) {
         super.paint(g);
@@ -157,6 +162,13 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             }
         }
         
+    }
+    public void build(){
+        int temp = gen.nextInt(4);
+        buildings[temp].x --;
+        if(buildings[temp].x == -200){
+            buildings[temp].x = 1400;
+        }
     }
     public Object isEquiped(){
         if(sword1.equipped){
