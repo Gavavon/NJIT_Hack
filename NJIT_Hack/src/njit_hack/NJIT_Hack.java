@@ -61,6 +61,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     Image timeBar;
     Image timeBarImg;
     Image ChefBoi;
+    Image pepDisc;
+    Image pizzaGuy;
 
     int amountPotions = 3;
     
@@ -68,6 +70,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     int playerReduce = 1;
 
     boolean freeze = false;
+    
+    boolean eturnTake = true;
 
     int timer = 0;
     int timer2 = 1000;
@@ -122,11 +126,11 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         backDrop = new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         playerRect = new Rectangle((int) (SCREEN_WIDTH / (double) (4.8)), (int) (SCREEN_HEIGHT / (double) (2.6)), (SCREEN_WIDTH / 18), (SCREEN_HEIGHT / 3) + ((SCREEN_HEIGHT / 3) / 8));
 
-        enemyRect = new Rectangle(1400, playerRect.y, playerRect.width, playerRect.height);
+        enemyRect = new Rectangle(1400, playerRect.y, (SCREEN_WIDTH / 6),  (SCREEN_HEIGHT / 3) + ((SCREEN_HEIGHT / 3) / 8));
 
         playerTimeBar = new Rectangle(playerRect.x - SCREEN_HEIGHT / 16, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 8) + 2, 50);
         
-        enemyTimeBar = new Rectangle(enemyRect.x + SCREEN_HEIGHT / 20, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 9) + 2, 50);
+        enemyTimeBar = new Rectangle((SCREEN_WIDTH/2), enemyRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 8) + 2, 50);
         
         buildingImgs = new Image[6];
         buildings = new Rectangle[10];
@@ -148,6 +152,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         try {
 
             timeBar = ImageIO.read(new File("src/njit_hack/Time Scale.png"));
+            pizzaGuy = ImageIO.read(new File("src/njit_hack/pizza guy.png"));
+            pepDisc = ImageIO.read(new File("src/njit_hack/pepperdisc.png"));
             buildingImgs[0] = ImageIO.read(new File("src/njit_hack/building (1).png"));
             buildingImgs[1] = ImageIO.read(new File("src/njit_hack/building (2).png"));
             buildingImgs[2] = ImageIO.read(new File("src/njit_hack/building (3).png"));
@@ -232,11 +238,17 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         g.drawImage(groundImg, ground.x, ground.y, ground.width, ground.height, null);
         
+        g.drawImage(pizzaGuy, enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height, null);
+        
         if (freeze) {
             
             for (int i = 0; i <= player.getHealth(); i++) {
                 g.setColor(Color.RED);
                 g.fillRect((playerRect.x - 60) + (i * 2), (playerRect.y + playerRect.height) + 7, 2, 5);
+            }
+            for (int i = 0; i <= enemey.getHealth(); i++) {
+                g.setColor(Color.RED);
+                g.fillRect((enemyRect.x) + (i * 2), (enemyRect.y + enemyRect.height) + 7, 2, 5);
             }
             
             g.drawImage(ChefBoi, playerRect.x, playerRect.y, playerRect.width, playerRect.height, null);
@@ -244,6 +256,46 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             
             g.drawImage(timeBar, enemyTimeBar.x, enemyTimeBar.y, enemyTimeBar.width, enemyTimeBar.height, null);
 
+            if (eturnTake == true) {
+                timer3 --;
+                if(timer3 == 0){
+                    eturnTake = false;
+                    timer3 = 1000;
+                }
+                if (timer3 >= 100) {
+                    g.drawImage(timeBarImg, enemyTimeBars[0].x, enemyTimeBars[0].y, enemyTimeBars[0].width, enemyTimeBars[0].height, null);
+                    if (timer3 >= 200) {
+                        g.drawImage(timeBarImg, enemyTimeBars[1].x, enemyTimeBars[1].y, enemyTimeBars[1].width, enemyTimeBars[1].height, null);
+                        if (timer3 >= 300) {
+                            g.drawImage(timeBarImg, enemyTimeBars[2].x, enemyTimeBars[2].y, enemyTimeBars[2].width, enemyTimeBars[2].height, null);
+                            if (timer3 >= 400) {
+                                g.drawImage(timeBarImg, enemyTimeBars[3].x, enemyTimeBars[3].y, enemyTimeBars[3].width, enemyTimeBars[3].height, null);
+                                if (timer3 >= 500) {
+                                    g.drawImage(timeBarImg, enemyTimeBars[4].x, enemyTimeBars[4].y, enemyTimeBars[4].width, enemyTimeBars[4].height, null);
+                                    if (timer3 >= 600) {
+                                        g.drawImage(timeBarImg, enemyTimeBars[5].x, enemyTimeBars[5].y, enemyTimeBars[5].width, enemyTimeBars[5].height, null);
+                                        if (timer3 >= 700) {
+                                            g.drawImage(timeBarImg, enemyTimeBars[6].x, enemyTimeBars[6].y, enemyTimeBars[6].width, enemyTimeBars[6].height, null);
+                                            if (timer3 >= 800) {
+                                                g.drawImage(timeBarImg, enemyTimeBars[7].x, enemyTimeBars[7].y, enemyTimeBars[7].width, enemyTimeBars[7].height, null);
+                                                if (timer3 >= 900) {
+                                                    g.drawImage(timeBarImg, enemyTimeBars[8].x, enemyTimeBars[8].y, enemyTimeBars[8].width, enemyTimeBars[8].height, null);
+                                                    if (timer3 >= 1000) {
+                                                        g.drawImage(timeBarImg, enemyTimeBars[9].x, enemyTimeBars[9].y, enemyTimeBars[9].width, enemyTimeBars[9].height, null);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
+            
+            
             if (turnTake == true) {
                 timer2 --;
                 if(timer2 == 0){
@@ -282,13 +334,11 @@ public class NJIT_Hack extends JPanel implements KeyListener {
                 }
                 
             }
+            
 
         }
 
         g.drawString("" + text, 50, 50);
-
-        g.setColor(Color.BLUE);
-        g.fillRect(enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height);
 
         if (!freeze) {
             timer++;
