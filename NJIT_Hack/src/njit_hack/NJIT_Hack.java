@@ -71,11 +71,11 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
     boolean freeze = false;
     
-    boolean eturnTake = true;
+    boolean eturnTake = false;
 
     int timer = 0;
     int timer2 = 1000;
-    int timer3 = 0;
+    int timer3 = 1000;
     int timer4 = 0;
     int timer5 = 0;
 
@@ -216,6 +216,24 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         long kingCrimson = System.currentTimeMillis();
         long actualClock = kingCrimson - System.currentTimeMillis();
+        
+        
+        
+        if(!eturnTake && freeze){
+            int temp = gen.nextInt(3);
+            if(temp == 0){
+                enemeyAttack();
+            }
+            if(temp == 1){
+                enemeyDefend();
+            }
+            if(temp == 2){
+                enemeyEvade();
+            }
+            
+        }
+        
+        
 
     }
 
@@ -257,7 +275,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             g.drawImage(timeBar, enemyTimeBar.x, enemyTimeBar.y, enemyTimeBar.width, enemyTimeBar.height, null);
 
             if (eturnTake == true) {
-                timer3 --;
+                timer3 -= 2;
                 if(timer3 == 0){
                     eturnTake = false;
                     timer3 = 1000;
@@ -297,7 +315,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             
             
             if (turnTake == true) {
-                timer2 --;
+                timer2 -= 2;
                 if(timer2 == 0){
                     turnTake = false;
                     timer2 = 1000;
@@ -412,9 +430,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         int temp = gen.nextInt(100) + 1;
         if (player.getSpeed() < temp) {
-            
-        } else {
-            enemeyAttack();
+            playerReduce = 0;
         }
         turnTake = true;
 
@@ -424,7 +440,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         int temp = gen.nextInt(100) + 1;
         if (player.getDefense() < temp) {
-            //you you shield
+            playerReduce = 0;
         }
         turnTake = true;
     }
@@ -444,30 +460,36 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     public void enemeyAttack() {
         int multiplier = 1;
 
-        if (criticalHit(player.getCriticalChance())) {
+        if (criticalHit(enemey.getCriticalChance())) {
             multiplier = 2;
         }
+
+        int playerHealth = player.getHealth();
+
+        playerHealth -= ((enemey.getAttack()) * multiplier) * playerReduce;
+
+        player.setHealth(playerHealth);
+        
+        playerReduce = 1;
+        
+        eturnTake = true;
 
     }
 
     public void enemeyEvade() {
-
+        int temp = gen.nextInt(100) + 1;
+        if (enemey.getSpeed() < temp) {
+            enemeyReduce = 0;
+        }
+        eturnTake = true;
     }
 
     public void enemeyDefend() {
-
-    }
-
-    public void enemeyUsePotion() {
-        if (amountPotions > 0) {
-            amountPotions -= 1;
-            player.setHealth(player.getHealth() + 50);
-            if (player.getHealth() > 100) {
-                int temp = 100 - player.getHealth();
-                player.setHealth(player.getHealth() - temp);
-            }
+        int temp = gen.nextInt(100) + 1;
+        if (enemey.getDefense() < temp) {
+            enemeyReduce = 0;
         }
-
+        eturnTake = true;
     }
 
     public Object isEquipped() {
@@ -533,6 +555,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
                 playerDefend();
             }
             if (e.getKeyCode() == KeyEvent.VK_T) {
+                print(eturnTake);
+                print(timer3);
             }
             if (e.getKeyCode() == KeyEvent.VK_Y) {
 
