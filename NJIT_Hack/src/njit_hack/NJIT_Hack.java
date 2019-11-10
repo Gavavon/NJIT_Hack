@@ -50,13 +50,12 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
     String text = "";
     
-    Object tempWeapon;
-
     public Random gen = new Random();
 
     public PlayerStats player = new PlayerStats();
     public EnemeyStats enemey = new EnemeyStats();
     public Sword1 sword1 = new Sword1();
+    tempWeapon tempWeapon = new tempWeapon();
 
     public NJIT_Hack() {
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -194,7 +193,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         int enemeyHealth = enemey.getHealth();
         
-        enemeyHealth  -= player.getAttack() + tempWeapon.getAttackDamage();
+        enemeyHealth  -= (player.getAttack() + tempWeapon.getAttackDamage()) * multiplier;
 
     } 
 
@@ -249,8 +248,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     }
 
     public Object isEquipped() {
-        if (sword1.equipped) {
-            return sword1;
+        if (sword1.getEquipped()) {
+            tempWeapon.setAttackDamage(sword1.getAttackDamage());
         }
 
         return null;
