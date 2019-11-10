@@ -169,13 +169,14 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     
     public void enemyMove(Rectangle enemy, int x){
         enemy.x -= 1;
-           if (enemy.x == (SCREEN_WIDTH / 2))
-               enemy.x--;
+           if (enemy.x <= (SCREEN_WIDTH / 2))
+               enemy.x +=1;
     }
     
     public void freezeEnemy(Rectangle enemy, int x, boolean freeze) {
         if (!freeze) {
             enemyMove(enemy, x);
+          
         }
     }
     public void buildMove(Rectangle build, int x) {
@@ -202,7 +203,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         int enemeyHealth = enemey.getHealth();
         
-        enemeyHealth  -= (player.getAttack() + tempWeapon.getAttackDamage()) * multiplier;
+        //enemeyHealth  -= (player.getAttack() + tempWeapon.getAttackDamage()) * multiplier;
 
     } 
 
@@ -223,7 +224,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
     }
 
-    public void playerUsePotion() {
+   /* public void playerUsePotion() {
         if (amountPotions > 0) {
             amountPotions -= 1;
             player.setHealth(player.getHealth() + 50);
@@ -234,7 +235,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
 
     }
-
+*/
     public void enemeyAttack() {
         int multiplier = 1;
 
@@ -253,7 +254,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
     }
 
-    public void enemeyUsePotion() {
+   /* public void enemeyUsePotion() {
         if (amountPotions > 0) {
             amountPotions -= 1;
             player.setHealth(player.getHealth() + 50);
@@ -264,7 +265,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
 
     }
-
+*/
     public Object isEquipped() {
         if (sword1.getEquipped()) {
             tempWeapon.setAttackDamage(sword1.getAttackDamage());
@@ -316,7 +317,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     public void keyReleased(KeyEvent e) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         if (e.getKeyCode() == KeyEvent.VK_Q) {
-            playerUsePotion();
+           // playerUsePotion();
         }
         if (e.getKeyCode() == KeyEvent.VK_W) {
             //playerAttack();
