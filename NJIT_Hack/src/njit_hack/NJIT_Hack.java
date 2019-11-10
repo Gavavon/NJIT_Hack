@@ -269,6 +269,9 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_X) {
             //no
         }
+        if (e.getKeyCode() == KeyEvent.VK_P) {
+            System.exit(0);
+        }
     }
     
 }
