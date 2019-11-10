@@ -25,13 +25,13 @@ import njit_hack.EnemeyStats;
 
 /**
  *
- * @author Gavav, ilitchfield64, jkpuzon
+ * @author Gavin O'Hanlon, ilitchfield64, jkpuzon
  */
 public class NJIT_Hack extends JPanel implements KeyListener {
-
+    
     final int SCREEN_WIDTH = 1200;
     final int SCREEN_HEIGHT = 650;
-
+    //declarations
     Rectangle backDrop;
     Rectangle ground;
     Rectangle playerRect;
@@ -59,6 +59,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         setFocusable(true);
         addKeyListener(this);
+        // initialization
 
         player.setHealth(100);
         player.setAttack(0);
@@ -122,6 +123,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     public void paint(Graphics g) {
         super.paint(g);
         update();
+        // graphics
         g.setColor(Color.BLACK);
         g.fillRect(backDrop.x, backDrop.y, backDrop.width, backDrop.height);
         g.setColor(Color.RED);
@@ -168,13 +170,13 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
 
         int enemeyHealth = enemey.getHealth();
-
-        enemeyHealth -= player.getAttack();
+        Object temp = isEquipped();
+        enemeyHealth  -= player.getAttack() + temp.get_Atk();
 
     }
 
     public void playerEvade() {
-
+        
     }
 
     public void playerDefend() {
@@ -200,9 +202,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             multiplier = 2;
         }
 
-        int enemeyHealth = enemey.getHealth();
-        Object temp = isEquipped();
-        //enemeyHealth  -= player.getAttack() + temp.get_Atk();
+        
     }
 
     public void enemeyEvade() {
