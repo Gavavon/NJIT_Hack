@@ -124,7 +124,9 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             freezeBuilding(buildings[i], buildings[i].x, freeze);
         
         }
-    
+        for (int i = 0; i < enemyRect.x; i++) {
+            freezeEnemy(enemyRect, enemyRect.x, freeze);
+    }
     
     }
 
@@ -159,13 +161,15 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     
     public void enemyMove(Rectangle enemy, int x){
         enemy.x -= 1;
-        if (enemy.x == (SCREEN_WIDTH / 2)){
-            freeze = true;
-        }
-            
+           if (enemy.x == (SCREEN_WIDTH / 2))
+               enemy.x--;
     }
     
-
+    public void freezeEnemy(Rectangle enemy, int x, boolean freeze) {
+        if (!freeze) {
+            enemyMove(enemy, x);
+        }
+    }
     public void buildMove(Rectangle build, int x) {
         build.x -= 1;
         if (build.x == -200) {
@@ -181,7 +185,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
     }
 
-    public void playerAttack() {
+     public void playerAttack() {
         int multiplier = 1;
 
         if (criticalHit(player.getCriticalChance())) {
@@ -192,7 +196,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         
         enemeyHealth  -= player.getAttack() + tempWeapon.getAttackDamage();
 
-    }
+    } 
 
     public void playerEvade() {
         
@@ -290,13 +294,15 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     }
 
     @Override
+    
+    
     public void keyReleased(KeyEvent e) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         if (e.getKeyCode() == KeyEvent.VK_Q) {
             playerUsePotion();
         }
         if (e.getKeyCode() == KeyEvent.VK_W) {
-            playerAttack();
+            //playerAttack();
         }
         if (e.getKeyCode() == KeyEvent.VK_E) {
             playerEvade();
