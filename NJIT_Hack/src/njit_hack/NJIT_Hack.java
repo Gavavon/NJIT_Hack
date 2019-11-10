@@ -206,12 +206,21 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
     } 
 
-    public void playerEvade() {
+     public void playerEvade() {
         
+        int temp = gen.nextInt(100) + 1;
+        if(player.getSpeed() < temp){
+            //you dodge
+        }
+            
     }
 
     public void playerDefend() {
 
+        int temp = gen.nextInt(100) + 1;
+        if(player.getDefense() < temp){
+            //you you shield
+        }
     }
 
     public void playerUsePotion() {
