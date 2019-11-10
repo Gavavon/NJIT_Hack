@@ -126,7 +126,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         playerTimeBar = new Rectangle(playerRect.x - SCREEN_HEIGHT / 16, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 8) + 2, 50);
         
-        enemyTimeBar = new Rectangle(enemyRect.x - SCREEN_HEIGHT / 16, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 9) + 3, 52);
+        enemyTimeBar = new Rectangle(enemyRect.x + SCREEN_HEIGHT / 20, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 9) + 2, 50);
         
         buildingImgs = new Image[6];
         buildings = new Rectangle[10];
@@ -241,6 +241,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             
             g.drawImage(ChefBoi, playerRect.x, playerRect.y, playerRect.width, playerRect.height, null);
             g.drawImage(timeBar, playerTimeBar.x, playerTimeBar.y, playerTimeBar.width, playerTimeBar.height, null);
+            
+            g.drawImage(timeBar, enemyTimeBar.x, enemyTimeBar.y, enemyTimeBar.width, enemyTimeBar.height, null);
 
             if (turnTake == true) {
                 timer2 --;
