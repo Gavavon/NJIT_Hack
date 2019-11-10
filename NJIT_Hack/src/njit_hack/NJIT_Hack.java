@@ -125,7 +125,10 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         playerTimeBar = new Rectangle(playerRect.x, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), playerRect.width + 2, 50);
         playerTimeBar = new Rectangle(playerRect.x - SCREEN_HEIGHT / 16, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 8) + 2, 50);
-
+        
+        enemyTimeBar = new Rectangle(enemyRect.x, enemyRect.y - (SCREEN_HEIGHT / (28 / 4)), enemyRect.width + 4, 51);
+        enemyTimeBar = new Rectangle(enemyRect.x - SCREEN_HEIGHT / 16, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 9) + 3, 52);
+        
         buildingImgs = new Image[6];
         buildings = new Rectangle[10];
         playerRun = new Image[8];
