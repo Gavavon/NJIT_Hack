@@ -9,7 +9,7 @@ package njit_hack;
  *
  * @author janka
  */
-public class StopWatch {
+public class StopWatch extends NJIT_Hack {
 
     private long Start = 0;
     private long End = 0;
@@ -18,12 +18,12 @@ public class StopWatch {
     
 
     public void start(){
-        this.Start = System.currentTimeMillis();
+        this.Start = actualClock;
         this.run = true;
     }
     
        public void end(){
-        this.End = System.currentTimeMillis();
+        this.End = kingCrimson - System.currentTimeMillis();
         this.run = true;
     }
 
