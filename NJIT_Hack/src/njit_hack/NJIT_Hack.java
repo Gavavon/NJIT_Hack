@@ -36,6 +36,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     Rectangle ground;
     Rectangle playerRect;
     Rectangle playerTimeBar;
+    Rectangle buildings[];
     
     Image timeBar;
     
@@ -63,9 +64,17 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         playerRect = new Rectangle((int) (SCREEN_WIDTH / (double) (4.8)), (int)(SCREEN_HEIGHT / (double) (2.6)),(SCREEN_WIDTH / 8),(SCREEN_HEIGHT/3) + ((SCREEN_HEIGHT/3) / 8));
         
         playerTimeBar = new Rectangle(playerRect.x, playerRect.y - (SCREEN_HEIGHT/(26/3)), playerRect.width, 50);
+        
+        buildings = new Rectangle[4];
+        
+        for (int i =0; i < buildings.length; i++){
+            buildings[i] = new Rectangle(0 ,SCREEN_HEIGHT-(i*250), SCREEN_WIDTH/7, (SCREEN_HEIGHT));
+        }
+        
         try{
             
             timeBar = ImageIO.read(new File("src/njit_hack/Time Scale.png"));
+           
 
         } catch (IOException e) {
 
@@ -96,11 +105,18 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     public void paint(Graphics g) {
         super.paint(g);
         update();
-        g.setColor(Color.RED);
+        g.setColor(Color.BLACK);
         g.fillRect(backDrop.x,backDrop.y,backDrop.width,backDrop.height);
+        g.setColor(Color.RED);
+        g.fillRect(buildings[0].x, buildings[0].y, buildings[0].width, buildings[0].height);
+        g.fillRect(buildings[1].x, buildings[1].y, buildings[1].width, buildings[1].height);
+        g.fillRect(buildings[2].x, buildings[2].y, buildings[2].width, buildings[2].height);
+        g.fillRect(buildings[3].x, buildings[3].y, buildings[3].width, buildings[3].height);
+        
+        
         g.setColor(Color.GRAY);
         g.fillRect(ground.x, ground.y, ground.width, ground.height);
-        g.setColor(Color.BLACK);
+        g.setColor(Color.GREEN);
         g.fillRect(playerRect.x, playerRect.y,playerRect.width , playerRect.height);
         
         g.drawImage(timeBar, playerTimeBar.x, playerTimeBar.y, playerTimeBar.width, playerTimeBar.height, null);
