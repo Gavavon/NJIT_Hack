@@ -140,7 +140,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         
         enemyTimeBar = new Rectangle[10];
         for (int i = 0; i <  enemyTimeBar.length; i++) {
-            enemyTimeBar[i] = new Rectangle(enemyTimeBar.x + 8 + (i * 14), enemyTimeBar.y + 5, 10, 40);
+            enemyTimeBar[i] = new Rectangle(enemyTimeBar[i].x + 8 + (i * 14), enemyTimeBar[i].y + 5, 10, 40);
             
         }
         try {
