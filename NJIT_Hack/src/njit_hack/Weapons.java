@@ -143,7 +143,7 @@ class Sword5{
     //bread cutting knife
     private String name = "Kitchen Saw";
     private int attackDamage = 15;
-    private boolean isEquipped = false;
+    private boolean isEquipped = true;
 
     public String getName() {
         return name;

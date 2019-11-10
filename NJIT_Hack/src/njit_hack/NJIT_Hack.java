@@ -67,12 +67,12 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     Image pizzaGuy;
 
     int amountPotions = 3;
-    
+
     int enemeyReduce = 1;
     int playerReduce = 1;
 
     boolean freeze = false;
-    
+
     boolean eturnTake = false;
 
     int timer = 0;
@@ -80,7 +80,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     int timer3 = 1000;
     int timer4 = 0;
     int timer5 = 0;
-    
+
     boolean pattack = false;
     boolean pevade = false;
     boolean pdefend = false;
@@ -95,6 +95,11 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     public PlayerStats player = new PlayerStats();
     public EnemeyStats enemey = new EnemeyStats();
     public Sword1 sword1 = new Sword1();
+    public Sword2 sword2 = new Sword2();
+    public Sword3 sword3 = new Sword3();
+    public Sword4 sword4 = new Sword4();
+    public Sword5 sword5 = new Sword5();
+
     tempWeapon tempWeapon = new tempWeapon();
 
     public NJIT_Hack() {
@@ -110,7 +115,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
             if (choice.equalsIgnoreCase("knight")) {
                 player.setHealth(100);
-                player.setAttack(8);
+                player.setAttack(200);
                 player.setSpeed(40);
                 player.setDefense(5);
                 player.setCriticalChance(8);
@@ -135,12 +140,12 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         backDrop = new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         playerRect = new Rectangle((int) (SCREEN_WIDTH / (double) (4.8)), (int) (SCREEN_HEIGHT / (double) (2.6)), (SCREEN_WIDTH / 18), (SCREEN_HEIGHT / 3) + ((SCREEN_HEIGHT / 3) / 8));
 
-        enemyRect = new Rectangle(1400, playerRect.y, (SCREEN_WIDTH / 6),  (SCREEN_HEIGHT / 3) + ((SCREEN_HEIGHT / 3) / 8));
+        enemyRect = new Rectangle(1400, playerRect.y, (SCREEN_WIDTH / 6), (SCREEN_HEIGHT / 3) + ((SCREEN_HEIGHT / 3) / 8));
 
         playerTimeBar = new Rectangle(playerRect.x - SCREEN_HEIGHT / 16, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 8) + 2, 50);
-        
-        enemyTimeBar = new Rectangle((SCREEN_WIDTH/2), enemyRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 8) + 2, 50);
-        
+
+        enemyTimeBar = new Rectangle((SCREEN_WIDTH / 2), enemyRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 8) + 2, 50);
+
         buildingImgs = new Image[6];
         buildings = new Rectangle[10];
         playerRun = new Image[8];
@@ -151,12 +156,12 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         timerBar = new Rectangle[10];
         for (int i = 0; i < timerBar.length; i++) {
             timerBar[i] = new Rectangle(playerTimeBar.x + 8 + (i * 14), playerTimeBar.y + 5, 10, 40);
-        }    
-        
+        }
+
         enemyTimeBars = new Rectangle[10];
-        for (int i = 0; i <  enemyTimeBars.length; i++) {
+        for (int i = 0; i < enemyTimeBars.length; i++) {
             enemyTimeBars[i] = new Rectangle(enemyTimeBar.x + 8 + (i * 14), enemyTimeBar.y + 5, 10, 40);
-            
+
         }
         try {
 
@@ -227,24 +232,39 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         long kingCrimson = System.currentTimeMillis();
         long actualClock = kingCrimson - System.currentTimeMillis();
-        
-        
-        
-        if(!eturnTake && freeze){
+
+        if (!eturnTake && freeze) {
             int temp = gen.nextInt(3);
-            if(temp == 0){
+            int attackCount = 0;
+            if (temp == 0 && attackCount == 3) {
+                temp = 3;
+                attackCount = 0;
+            } else if (temp == 0) {
                 enemeyAttack();
-            }
-            if(temp == 1){
+                attackCount++;
+
+            } else if (temp == 1) {
+                attackCount--;
+                if (attackCount < 0) {
+                    attackCount = 0;
+                }
                 enemeyDefend();
-            }
-            if(temp == 2){
+
+            } else {
+                attackCount--;
+                if (attackCount < 0) {
+                    attackCount = 0;
+                }
                 enemeyEvade();
             }
-            
+
         }
-        
-        
+
+        if (enemey.getHealth() <= 0) {
+            enemyRect = new Rectangle(1400, playerRect.y, (SCREEN_WIDTH / 6), (SCREEN_HEIGHT / 3) + ((SCREEN_HEIGHT / 3) / 8));
+
+            enemey.randomizeStats(hardMode);
+        }
 
     }
 
@@ -266,12 +286,12 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
 
         g.drawImage(groundImg, ground.x, ground.y, ground.width, ground.height, null);
-        if(!eattack && !eevade && !edefend){
-            g.drawImage(pizzaGuy, enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height, null);
-        }
-        
+        //if (!eattack && !eevade && !edefend) {
+        g.drawImage(pizzaGuy, enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height, null);
+        //}
+
         if (freeze) {
-            
+            g.drawString("" + text, 50, 50);
             for (int i = 0; i <= player.getHealth(); i++) {
                 g.setColor(Color.RED);
                 g.fillRect((playerRect.x - 60) + (i * 2), (playerRect.y + playerRect.height) + 7, 2, 5);
@@ -280,17 +300,17 @@ public class NJIT_Hack extends JPanel implements KeyListener {
                 g.setColor(Color.RED);
                 g.fillRect((enemyRect.x) + (i * 2), (enemyRect.y + enemyRect.height) + 7, 2, 5);
             }
-            
-            if(!pattack && !pevade && !pdefend){
-               g.drawImage(ChefBoi, playerRect.x, playerRect.y, playerRect.width, playerRect.height, null);
+
+            if (!pattack && !pevade && !pdefend) {
+                g.drawImage(ChefBoi, playerRect.x, playerRect.y, playerRect.width, playerRect.height, null);
             }
             g.drawImage(timeBar, playerTimeBar.x, playerTimeBar.y, playerTimeBar.width, playerTimeBar.height, null);
-            
+
             g.drawImage(timeBar, enemyTimeBar.x, enemyTimeBar.y, enemyTimeBar.width, enemyTimeBar.height, null);
 
             if (eturnTake == true) {
                 timer3 -= 2;
-                if(timer3 == 0){
+                if (timer3 == 0) {
                     eturnTake = false;
                     timer3 = 1000;
                 }
@@ -324,13 +344,12 @@ public class NJIT_Hack extends JPanel implements KeyListener {
                         }
                     }
                 }
-                
+
             }
-            
-            
+
             if (turnTake == true) {
                 timer2 -= 2;
-                if(timer2 == 0){
+                if (timer2 == 0) {
                     turnTake = false;
                     timer2 = 1000;
                 }
@@ -364,67 +383,62 @@ public class NJIT_Hack extends JPanel implements KeyListener {
                         }
                     }
                 }
-                
+
             }
-            
 
         }
         g.setColor(Color.BLACK);
         g.drawString("Number of Potions: " + amountPotions, SCREEN_WIDTH - 250, 50);
-        if(pattack){
+        if (pattack) {
             g.drawImage(ChefBoiFence, playerRect.x + 150, playerRect.y, playerRect.width + 200, playerRect.height, this);
-            timer4 ++;
-            if(timer4 == 150){
+            timer4++;
+            if (timer4 == 150) {
                 timer4 = 0;
                 pattack = false;
             }
         }
-        if(pevade){
-            g.drawImage(ChefBoiFenceDef, playerRect.x - 150, playerRect.y, playerRect.width, playerRect.height, this);
-            timer4 ++;
-            if(timer4 == 150){
+        if (pevade) {
+            g.drawImage(ChefBoiFenceDef, playerRect.x - 150, playerRect.y, playerRect.width + 150, playerRect.height, this);
+            timer4++;
+            if (timer4 == 200) {
                 timer4 = 0;
                 pevade = false;
             }
         }
-        if(pdefend){
-            g.drawImage(ChefBoiFenceDef, playerRect.x, playerRect.y, playerRect.width, playerRect.height, this);
-            timer4 ++;
-            if(timer4 == 150){
+        if (pdefend) {
+            g.drawImage(ChefBoiFenceDef, playerRect.x, playerRect.y, playerRect.width + 150, playerRect.height, this);
+            timer4++;
+            if (timer4 == 250) {
                 timer4 = 0;
                 pdefend = false;
             }
         }
-        
-        
-        
-        
-        
-        g.drawString("" + text, 50, 50);
-        if(eattack){
-            //g.drawImage(ChefBoiFence, playerRect.x + 150, playerRect.y, playerRect.width + 200, playerRect.height, this);
-            timer5 ++;
-            if(timer5 == 150){
+        /*
+        if (eattack) {
+            g.drawImage(pizzaGuy, enemyRect.x - 200, enemyRect.y, enemyRect.width, enemyRect.height, null);
+            timer5++;
+            if (timer5 == 150) {
                 timer5 = 0;
                 pattack = false;
             }
         }
-        if(eevade){
-            //g.drawImage(ChefBoiFence, playerRect.x, playerRect.y, playerRect.width, playerRect.height, this);
-            timer5 ++;
-            if(timer5 == 150){
+        if (eevade) {
+            g.drawImage(pizzaGuy, enemyRect.x + 200, enemyRect.y, enemyRect.width, enemyRect.height, null);
+            timer5++;
+            if (timer5 == 150) {
                 timer5 = 0;
                 pevade = false;
             }
         }
-        if(edefend){
-            //g.drawImage(ChefBoiFence, playerRect.x, playerRect.y, playerRect.width, playerRect.height, this);
-            timer5 ++;
-            if(timer5 == 150){
+        if (edefend) {
+            g.drawImage(pizzaGuy, enemyRect.x + 100, enemyRect.y, enemyRect.width, enemyRect.height, null);
+            timer5++;
+            if (timer5 == 150) {
                 timer5 = 0;
                 pdefend = false;
             }
         }
+        */
         if (!freeze) {
             timer++;
             if (timer <= 25 && timer > 0) {
@@ -481,16 +495,17 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             multiplier = 2;
         }
 
+        isEquipped();
+
         int enemeyHealth = enemey.getHealth();
 
         enemeyHealth -= ((player.getAttack() + tempWeapon.getAttackDamage()) * multiplier) * enemeyReduce;
-
         enemey.setHealth(enemeyHealth);
-        
+
         enemeyReduce = 1;
-        
+
         pattack = true;
-        
+
         turnTake = true;
 
     }
@@ -519,13 +534,15 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     public void playerUsePotion() {
         if (amountPotions > 0) {
             amountPotions -= 1;
-            player.setHealth(player.getHealth() + 50);
-            if (player.getHealth() > 100) {
-                int temp = 100 - player.getHealth();
-                player.setHealth(player.getHealth() - temp);
+            if (player.getHealth() < 100 && player.getHealth() < 50) {
+                player.setHealth(player.getHealth() + 50);
+                print(player.getHealth());
+            } else {
+                player.setHealth(100);
+                print(player.getHealth());
             }
-        }
 
+        }
     }
 
     public void enemeyAttack() {
@@ -540,11 +557,11 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         playerHealth -= ((enemey.getAttack()) * multiplier) * playerReduce;
 
         player.setHealth(playerHealth);
-        
+
         playerReduce = 1;
-        
+
         eattack = true;
-        
+
         eturnTake = true;
 
     }
@@ -567,12 +584,23 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         eturnTake = true;
     }
 
-    public Object isEquipped() {
+    public void isEquipped() {
         if (sword1.getEquipped()) {
             tempWeapon.setAttackDamage(sword1.getAttackDamage());
         }
+        if (sword2.getEquipped()) {
+            tempWeapon.setAttackDamage(sword2.getAttackDamage());
+        }
+        if (sword3.getEquipped()) {
+            tempWeapon.setAttackDamage(sword3.getAttackDamage());
+        }
+        if (sword4.getEquipped()) {
+            tempWeapon.setAttackDamage(sword4.getAttackDamage());
+        }
+        if (sword5.getEquipped()) {
+            tempWeapon.setAttackDamage(sword5.getAttackDamage());
+        }
 
-        return null;
     }
 
     public boolean criticalHit(int cChance) {
