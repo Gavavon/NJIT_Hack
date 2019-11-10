@@ -72,10 +72,10 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         
         playerTimeBar = new Rectangle(playerRect.x, playerRect.y - (SCREEN_HEIGHT/(26/3)), playerRect.width, 50);
         
-        buildings = new Rectangle[4];
+        buildings = new Rectangle[10];
         
         for (int i =0; i < buildings.length; i++){
-            buildings[i] = new Rectangle(1400, ground.y - ((SCREEN_HEIGHT/8) + (i * 100)), (SCREEN_WIDTH/12), (SCREEN_HEIGHT/8) + (i * 100));
+            buildings[i] = new Rectangle(SCREEN_WIDTH + 200 + gen.nextInt(1000), ground.y - ((SCREEN_HEIGHT/8) + (i * 25)), (SCREEN_WIDTH/12), (SCREEN_HEIGHT/8) + (i * 25));
         }
         
         try{
@@ -111,12 +111,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     public void update(){
         //update stuff here
         for(int i = 0; i < buildings.length; i ++){
-            freezeBuilding(buildings[i], buildings[i].x, buildings[i].y, freeze);
+            freezeBuilding(buildings[i], buildings[i].x, freeze);
         }
-        
-        
-        build();
-        
         
         
         
@@ -128,10 +124,10 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         g.setColor(Color.BLACK);
         g.fillRect(backDrop.x,backDrop.y,backDrop.width,backDrop.height);
         g.setColor(Color.RED);
-        g.fillRect(buildings[0].x, buildings[0].y, buildings[0].width, buildings[0].height);
-        g.fillRect(buildings[1].x, buildings[1].y, buildings[1].width, buildings[1].height);
-        g.fillRect(buildings[2].x, buildings[2].y, buildings[2].width, buildings[2].height);
-        g.fillRect(buildings[3].x, buildings[3].y, buildings[3].width, buildings[3].height);
+        for(int i = 0; i < buildings.length; i ++){
+            g.fillRect(buildings[i].x, buildings[i].y, buildings[i].width, buildings[i].height);
+        
+        }
         
         
         g.setColor(Color.GRAY);
@@ -146,17 +142,16 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         
         repaint();
     }
-    public void buildMove(Rectangle build, int x, int y) {
+    public void buildMove(Rectangle build, int x) {
         build.x -= 1;
         if (build.x == -200) {
-            build.y = y;
-            build.x = x;
+            build.x += SCREEN_WIDTH + 200 + gen.nextInt(1000);
         }
 
     }
-    public void freezeBuilding(Rectangle build, int x, int y, boolean freeze){
+    public void freezeBuilding(Rectangle build, int x, boolean freeze){
         if (!freeze) {
-            buildMove(build, x, y);
+            buildMove(build, x);
         }
         
     }
@@ -168,6 +163,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
         
         int enemeyHealth = enemey.getHealth();
+        
+        enemeyHealth -= player.getAttack();
         
     }
     public void playerEvade(){
@@ -196,7 +193,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
         
         int enemeyHealth = enemey.getHealth();
-        //enemeyHealth 
+        Object temp = isEquipped();
+        //enemeyHealth  -= player.getAttack() + temp.get_Atk();
     }
     public void enemeyEvade(){
         
@@ -216,23 +214,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         
     }
     
-    public void build(){
-       
-        
-        int temp = gen.nextInt(4);
-        
-        
-        while (buildings[temp].x != -300){
-            buildings[temp].x--;
-        }
-        
-       /* if(buildings[0].x == -400){
-            buildings[0].x = 1400;
-            
-            
-        } */
-    }
-    public Object isEquiped(){
+    public Object isEquipped(){
         if(sword1.equipped){
             return sword1;
         }
