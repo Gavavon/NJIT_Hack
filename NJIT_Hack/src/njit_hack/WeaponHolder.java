@@ -7,6 +7,7 @@
 package njit_hack;
 
 import njit_hack.Sword1;
+import njit_hack.tempWeapon;
 /**
  *
  * @author Gavav

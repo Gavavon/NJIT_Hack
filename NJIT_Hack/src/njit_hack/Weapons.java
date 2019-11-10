@@ -12,26 +12,45 @@ package njit_hack;
 public class Weapons {
     
 }
-class Sword1 {
+class tempWeapon {
+    private String name = "";
+    private int attackDamage = 0;
+    private boolean isEquipped = false;
 
-    String name = "Sword of Mediocrity";
-    int AttackValue = 10;
-    boolean equipped = false;
-
-    protected String get_Name() {
+    protected String getName() {
         return name;
     }
 
-    protected int get_Atk() {
-        return AttackValue;
+    protected int getAttackDamage() {
+        return attackDamage;
     }
 
-    protected void set_equipped(boolean is) {
-        equipped = is;
+    protected void setEquipped(boolean isEquipped) {
+        this.isEquipped = isEquipped;
     }
 
-    protected boolean get_equipped() {
-        return equipped;
+    protected boolean getEquipped() {
+        return isEquipped;
+    }
+}
+class Sword1{
+    private String name = "Sword of dumb";
+    private int attackDamage = 10;
+    private boolean isEquipped = false;
+
+    protected String getName() {
+        return name;
     }
 
+    protected int getAttackDamage() {
+        return attackDamage;
+    }
+
+    protected void setEquipped(boolean isEquipped) {
+        this.isEquipped = isEquipped;
+    }
+
+    protected boolean getEquipped() {
+        return isEquipped;
+    }
 }
