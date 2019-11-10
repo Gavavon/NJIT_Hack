@@ -39,6 +39,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     Rectangle buildings[];
     Rectangle timerBar[];
     Rectangle enemyRect;
+    long kingCrimson = 0;
+    long actualClock = 0;
     
     
 
@@ -71,8 +73,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         player.setDefense(0);
         player.setCriticalChance(0);
         
-        long kingCrimson = System.currentTimeMillis();
-        long actualClock = kingCrimson - System.currentTimeMillis();
+        
 
         ground = new Rectangle(0, (SCREEN_HEIGHT / 3) * 2, SCREEN_WIDTH, (SCREEN_HEIGHT / 3) + 2);
         backDrop = new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -130,6 +131,9 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
         for (int i = 0; i < enemyRect.x; i++) {
             freezeEnemy(enemyRect, enemyRect.x, freeze);
+            
+        long kingCrimson = System.currentTimeMillis();
+        long actualClock = kingCrimson - System.currentTimeMillis();
     }
     
     }
