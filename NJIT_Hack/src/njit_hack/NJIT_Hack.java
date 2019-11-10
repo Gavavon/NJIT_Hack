@@ -42,11 +42,18 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     long kingCrimson = 0;
     long actualClock = 0;
     
+    Image buildingImgs[];
+    Image playerRun[];
+   
+    Image backDropImg;
     
+    Image groundImg;
 
     int buildingX = 0;
 
     Image timeBar;
+    Image timeBarImg;
+    Image ChefBoi;
 
     int amountPotions = 3;
 
@@ -58,6 +65,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
     public PlayerStats player = new PlayerStats();
     public EnemeyStats enemey = new EnemeyStats();
+    public StopWatch watch = new StopWatch();
     public Sword1 sword1 = new Sword1();
     tempWeapon tempWeapon = new tempWeapon();
 
@@ -77,14 +85,17 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         ground = new Rectangle(0, (SCREEN_HEIGHT / 3) * 2, SCREEN_WIDTH, (SCREEN_HEIGHT / 3) + 2);
         backDrop = new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        playerRect = new Rectangle((int) (SCREEN_WIDTH / (double) (4.8)), (int) (SCREEN_HEIGHT / (double) (2.6)), (SCREEN_WIDTH / 8), (SCREEN_HEIGHT / 3) + ((SCREEN_HEIGHT / 3) / 8));
+        playerRect = new Rectangle((int) (SCREEN_WIDTH / (double) (4.8)), (int) (SCREEN_HEIGHT / (double) (2.6)), (SCREEN_WIDTH / 16), (SCREEN_HEIGHT / 3) + ((SCREEN_HEIGHT / 3) / 8));
         
         enemyRect = new Rectangle(1400,playerRect.y,playerRect.width,playerRect.height);
         
         playerTimeBar = new Rectangle(playerRect.x, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), playerRect.width + 2, 50);
-
+        playerTimeBar = new Rectangle(playerRect.x - SCREEN_HEIGHT/16, playerRect.y - (SCREEN_HEIGHT / (26 / 3)), (SCREEN_WIDTH / 8) + 2, 50);
+        
+        buildingImgs = new Image[6];
         buildings = new Rectangle[10];
-
+        playerRun = new Image[8];
+        
         for (int i = 0; i < buildings.length; i++) {
             buildings[i] = new Rectangle(SCREEN_WIDTH + 200 + gen.nextInt(1000), ground.y - ((SCREEN_HEIGHT / 8) + (i * 25)), (SCREEN_WIDTH / 12), (SCREEN_HEIGHT / 8) + (i * 25));
         }
@@ -96,7 +107,25 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         try {
 
             timeBar = ImageIO.read(new File("src/njit_hack/Time Scale.png"));
-
+            buildingImgs[0] = ImageIO.read(new File("src/njit_hack/building (1).png"));
+            buildingImgs[1] = ImageIO.read(new File("src/njit_hack/building (2).png"));
+            buildingImgs[2] = ImageIO.read(new File("src/njit_hack/building (3).png"));
+            buildingImgs[3] = ImageIO.read(new File("src/njit_hack/building (4).png"));
+            buildingImgs[4] = ImageIO.read(new File("src/njit_hack/building (5).png"));
+            buildingImgs[5] = ImageIO.read(new File("src/njit_hack/building (6).png"));
+            backDropImg = ImageIO.read(new File("src/njit_hack/sunset.png"));
+            groundImg = ImageIO.read(new File("src/njit_hack/Ground.png"));
+            timeBarImg = ImageIO.read(new File("src/njit_hack/timebar.png"));
+            ChefBoi = ImageIO.read(new File("src/njit_hack/ChefBoi.png"));
+            
+            playerRun[0] = ImageIO.read(new File("src/njit_hack/running chef (0).png"));
+            playerRun[1] = ImageIO.read(new File("src/njit_hack/running chef (1).png"));
+            playerRun[2] = ImageIO.read(new File("src/njit_hack/running chef (2).png"));
+            playerRun[3] = ImageIO.read(new File("src/njit_hack/running chef (3).png"));
+            playerRun[4] = ImageIO.read(new File("src/njit_hack/running chef (4).png"));
+            playerRun[5] = ImageIO.read(new File("src/njit_hack/running chef (5).png"));
+            playerRun[6] = ImageIO.read(new File("src/njit_hack/running chef (6).png"));
+            playerRun[7] = ImageIO.read(new File("src/njit_hack/running chef (7).png"));
         } catch (IOException e) {
 
         }
@@ -162,19 +191,32 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         g.setColor(Color.GREEN);
         g.fillRect(playerRect.x, playerRect.y, playerRect.width, playerRect.height);
 
+        g.drawImage(groundImg, ground.x, ground.y, ground.width, ground.height, null);
+        if(freeze){
+            g.drawImage(ChefBoi, playerRect.x, playerRect.y, playerRect.width, playerRect.height, null);
+        }
         g.drawImage(timeBar, playerTimeBar.x, playerTimeBar.y, playerTimeBar.width, playerTimeBar.height, null);
 
         g.drawString("" + text, 50, 50);
         for (int i = 0; i < timerBar.length; i++) {
-            g.fillRect(timerBar[i].x, timerBar[i].y, timerBar[i].width, timerBar[i].height);
+            g.drawImage(timeBarImg, timerBar[i].x, timerBar[i].y, timerBar[i].width, timerBar[i].height,null);
         }
         g.setColor(Color.BLUE);
         g.fillRect(enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height);
-            repaint();
+        
+        if(!freeze){
+            int temp = 0;
+            watch.start();
+            if(watch.elapsed == 142){
+                temp += 1;
+            }
+            g.drawImage(playerRun[temp], playerRect.x, playerRect.y, playerRect.width +50, playerRect.height, null);
         }
-    
-    
-    
+        
+        
+        
+        repaint();
+    }
     public void buildMove(Rectangle build, int x) {
         build.x -= 1;
         if (build.x == -200) {
