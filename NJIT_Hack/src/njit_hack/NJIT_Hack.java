@@ -582,6 +582,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             stemp = ("The enemy has Evaded!");
             eevade = true;
         }
+        stemp = ("The enemy did nothing");
         eturnTake = true;
     }
 
@@ -592,6 +593,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             stemp = ("The enemy has Defended!");
             edefend = true;
         }
+        stemp = ("The enemy did nothing");
         eturnTake = true;
     }
 
