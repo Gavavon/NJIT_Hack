@@ -80,7 +80,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     int timer3 = 1000;
     int timer4 = 0;
     int timer5 = 0;
-    
+
     String stemp = "";
 
     boolean pattack = false;
@@ -242,9 +242,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
                 temp = 1;
                 attackCount = 0;
             } else if (temp == 0) {
-	    attackCount++;
+                attackCount++;
                 enemeyAttack();
-                
 
             } else if (temp == 1) {
                 attackCount--;
@@ -263,11 +262,15 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
         }
 
-
         if (enemey.getHealth() <= 0) {
             enemyRect = new Rectangle(1400, playerRect.y, (SCREEN_WIDTH / 6), (SCREEN_HEIGHT / 3) + ((SCREEN_HEIGHT / 3) / 8));
-
+            freeze = false;
+            amountPotions += gen.nextInt(4);
             enemey.randomizeStats(hardMode);
+        }
+        if(player.getHealth() <= 0){
+            System.out.println("GAME OVER!");
+            System.exit(1);
         }
 
     }
@@ -442,7 +445,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
                 pdefend = false;
             }
         }
-        */
+         */
         if (!freeze) {
             timer++;
             if (timer <= 25 && timer > 0) {
@@ -565,7 +568,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         playerReduce = 1;
 
         eattack = true;
-        
+
         stemp = ("The enemy has Attacked!");
 
         eturnTake = true;
