@@ -1,0 +1,12 @@
+njit_hack.Sword5
+njit_hack.Sword4
+njit_hack.Sword1
+njit_hack.Sword3
+njit_hack.Spear4
+njit_hack.Sword2
+njit_hack.Spear5
+njit_hack.Spear2
+njit_hack.Spear3
+njit_hack.Spear1
+njit_hack.Weapons
+njit_hack.tempWeapon

@@ -14,6 +14,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
+import java.time.Clock;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Random;
 import java.util.Scanner;
 import javax.imageio.ImageIO;
@@ -103,6 +106,10 @@ public class NJIT_Hack extends JPanel implements KeyListener {
     public Sword5 sword5 = new Sword5();
 
     tempWeapon tempWeapon = new tempWeapon();
+
+    Clock updateClock = Clock.systemDefaultZone();
+    Clock temp = Clock.offset(updateClock, Duration.ofMillis(1));
+    Instant update = temp.instant();
 
     public NJIT_Hack() {
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -226,10 +233,8 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         if (enemyRect.x != SCREEN_WIDTH / 2 /* && after a certian amount of time*/) {
             enemyRect.x--;
 
-        } else {
-            if (enemyRect.x == SCREEN_WIDTH / 2) {
-                freeze = true;
-            }
+        } else if (enemyRect.x == SCREEN_WIDTH / 2) {
+            freeze = true;
         }
 
         long kingCrimson = System.currentTimeMillis();
@@ -261,6 +266,46 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             }
 
         }
+        if (!freeze) {
+            timer++;
+        }
+        if (freeze) {
+            if (turnTake == true) {
+                timer2 -= 1.5;
+                if (timer2 == 0) {
+                    turnTake = false;
+                    timer2 = 1000;
+                }
+            }
+            if (eturnTake == true) {
+                timer3 -= 1.5;
+                if (timer3 == 0) {
+                    eturnTake = false;
+                    timer3 = 1000;
+                }
+            }
+        }
+        if (pattack) {
+            timer4++;
+            if (timer4 == 150) {
+                timer4 = 0;
+                pattack = false;
+            }
+        }
+        if (pevade) {
+            timer4++;
+            if (timer4 == 200) {
+                timer4 = 0;
+                pevade = false;
+            }
+        }
+        if (pdefend) {
+            timer4++;
+            if (timer4 == 250) {
+                timer4 = 0;
+                pdefend = false;
+            }
+        }
 
         if (enemey.getHealth() <= 0) {
             enemyRect = new Rectangle(1400, playerRect.y, (SCREEN_WIDTH / 6), (SCREEN_HEIGHT / 3) + ((SCREEN_HEIGHT / 3) / 8));
@@ -268,7 +313,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             amountPotions += gen.nextInt(4);
             enemey.randomizeStats(hardMode);
         }
-        if(player.getHealth() <= 0){
+        if (player.getHealth() <= 0) {
             System.out.println("GAME OVER!");
             System.exit(1);
         }
@@ -277,7 +322,6 @@ public class NJIT_Hack extends JPanel implements KeyListener {
 
     public void paint(Graphics g) {
         super.paint(g);
-        update();
         // graphics
         g.drawImage(backDropImg, backDrop.x, backDrop.y, backDrop.width, backDrop.height, null);
 
@@ -316,11 +360,6 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             g.drawImage(timeBar, enemyTimeBar.x, enemyTimeBar.y, enemyTimeBar.width, enemyTimeBar.height, null);
 
             if (eturnTake == true) {
-                timer3 -= 1.5;
-                if (timer3 == 0) {
-                    eturnTake = false;
-                    timer3 = 1000;
-                }
                 if (timer3 >= 100) {
                     g.drawImage(timeBarImg, enemyTimeBars[0].x, enemyTimeBars[0].y, enemyTimeBars[0].width, enemyTimeBars[0].height, null);
                     if (timer3 >= 200) {
@@ -355,11 +394,6 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             }
 
             if (turnTake == true) {
-                timer2 -= 1.5;
-                if (timer2 == 0) {
-                    turnTake = false;
-                    timer2 = 1000;
-                }
                 if (timer2 >= 100) {
                     g.drawImage(timeBarImg, timerBar[0].x, timerBar[0].y, timerBar[0].width, timerBar[0].height, null);
                     if (timer2 >= 200) {
@@ -398,27 +432,12 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         g.drawString("Number of Potions: " + amountPotions, SCREEN_WIDTH - 250, 50);
         if (pattack) {
             g.drawImage(ChefBoiFence, playerRect.x + 150, playerRect.y, playerRect.width + 200, playerRect.height, this);
-            timer4++;
-            if (timer4 == 150) {
-                timer4 = 0;
-                pattack = false;
-            }
         }
         if (pevade) {
             g.drawImage(ChefBoiFenceDef, playerRect.x - 150, playerRect.y, playerRect.width + 150, playerRect.height, this);
-            timer4++;
-            if (timer4 == 200) {
-                timer4 = 0;
-                pevade = false;
-            }
         }
         if (pdefend) {
             g.drawImage(ChefBoiFenceDef, playerRect.x, playerRect.y, playerRect.width + 150, playerRect.height, this);
-            timer4++;
-            if (timer4 == 250) {
-                timer4 = 0;
-                pdefend = false;
-            }
         }
         /*
         if (eattack) {
@@ -447,7 +466,7 @@ public class NJIT_Hack extends JPanel implements KeyListener {
         }
          */
         if (!freeze) {
-            timer++;
+
             if (timer <= 25 && timer > 0) {
                 g.drawImage(playerRun[0], playerRect.x, playerRect.y, playerRect.width + 50, playerRect.height, null);
             }
@@ -477,7 +496,17 @@ public class NJIT_Hack extends JPanel implements KeyListener {
             }
         }
 
+        if (updateClock.instant().compareTo(update) >= 0) {
+            resetUpdateClock();
+            update();
+        }
         repaint();
+    }
+
+    public void resetUpdateClock() {
+        temp = Clock.offset(updateClock, Duration.ofMillis(4));
+        update = temp.instant();
+        //clock2 = clock2.plusSeconds(2);
     }
 
     public void buildMove(Rectangle build, int x) {
